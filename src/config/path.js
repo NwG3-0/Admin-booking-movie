@@ -1,0 +1,5 @@
+export const HOME = '/'
+export const USER ='/user'
+export const MOVIE ='/movie'
+export const MOVIE_MODIFY ='/movie_modify'
+export const LOGIN='/login'
