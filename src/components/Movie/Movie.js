@@ -1,8 +1,6 @@
-import { Layout } from "antd"
 import { useEffect, useState } from "react";
 import PrivateLayout from "../../Layout/PrivateLayout"
-import { Button, Input, Pagination, Table } from "antd";
-import { IoMdStarHalf } from "react-icons/io";
+import { Button, Table } from "antd";
 import '../../style/Movie.css';
 
 const Movie =()=>{

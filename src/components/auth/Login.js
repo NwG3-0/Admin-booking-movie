@@ -1,10 +1,9 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { HOME } from "../../config/path";
 import { API_LOGIN } from "../../config/endpointapi";
 import Cookies from "cookies-js";
-
 
 const Login = () => {
   const history = useHistory();
@@ -13,8 +12,8 @@ const Login = () => {
     axios
       .post(API_LOGIN, values)
       .then(function (res) {
-       Cookies.set("data", JSON.stringify(res.data.user));
-       Cookies.set("token",res.data.access_token);
+        Cookies.set("data", JSON.stringify(res.data.user));
+        Cookies.set("token", res.data.access_token);
         history.push(HOME);
         console.log(res);
       })
