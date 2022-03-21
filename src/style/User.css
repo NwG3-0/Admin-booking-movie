@@ -1,0 +1,12 @@
+.user-search{
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    margin: auto;
+}
+
+.user-search__btn{
+    padding: 10px 20px;
+    background-color: rgb(144, 144, 253);
+    color: white;
+}

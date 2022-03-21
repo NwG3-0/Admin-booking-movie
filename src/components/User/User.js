@@ -1,90 +1,47 @@
-import { Button, Input, Pagination, Table } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import { AudioOutlined } from "@ant-design/icons";
+import { Button, Input, Table } from "antd";
+import { useEffect, useRef, useState } from "react";
 import PrivateLayout from "../../Layout/PrivateLayout";
+import axios from "axios";
+import { API_LIST_USER } from "../../config/endpointapi";
+import '../../style/User.css'
 
 const User = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [value, setValue] = useState("");
-  const suffix = (
-    <AudioOutlined
-      style={{
-        fontSize: 16,
-        color: "#1890ff",
-      }}
-    />
-  );
-  const onSearch = (value) => console.log(value);
+  const value = useRef()
+  const [limit, setLimit] = useState(10);
+  const [keyword, setKeyword] = useState("");
+  const [page, setPage] = useState(1);
+  const [data, setData] = useState([]);
+  
+  const getUser = async () => {
+    const params = {limit, page, keyword}
+    await axios.get(API_LIST_USER, {params})
+      .then(res => {
+        setData(res?.data?.data?.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   useEffect(() => {
-    
-    const data = [];
-    for (let index = 0; index <= 15; index++) {
-      data.push({
-        key: `${index}`,
-        name: `User ${index}`,
-        age: `${index}`,
-        email: `Email ${index}`,
-        profile: `Profile ${index}`,
-      });
-    }
-    setDataSource(data);
-  }, []);
-  const FilterByNameInput = (
-    <Input
-      placeholder="Search Name"
-      value={value}
-      onChange={e => {
-        const currValue = e.target.value;
-        setValue(currValue);
-        const filteredData = dataSource.filter(entry =>
-          entry.name.includes(currValue)
-        );
-        setDataSource(filteredData);
-      }}
-    />
-  );
+    getUser()
+  }, [])
+
+  const onSearch = () => {
+    setKeyword(value.current.value)
+    console.log(value.current.input.value)
+    getUser()
+  }
+
   const columns = [
-    { title:"Profile", dataIndex: "profile" },
-    {
-      title: "Name",
-      dataIndex: "name",
-      // filterDropdown: (setSelectedKeys, selectedKeys, confirm, clearFilter) => {
-      //   return (
-      //     <Input
-      //       autoFocus
-      //       placeholder="Search"
-      //       value={selectedKeys}
-      //       onPressEnter={() => {
-      //         confirm();
-      //       }}
-      //       onBlur={() => {
-      //         confirm();
-      //       }}
-      //       onChange={(e) => {
-      //         setSelectedKeys(e.target.value ? [e.target.value] : []);
-      //       }}
-      //     >
-      //       <Button
-      //         onClick={() => {
-      //           confirm();
-      //         }}
-      //       >
-      //         Search
-      //       </Button>
-      //     </Input>
-      //   );
-      // },
-      // filterIcon: () => {
-      //   return <SearchOutlined />;
-      // },
-      // // onFilter: (value, record) => {
-      // //   return record.name.toLowerCase().include(value.toLowerCase());
-      // // },
-    },
-    { title: "Contact", dataIndex: "contacteee" },
-    { title: "Email", dataIndex: "email" },
+    { title: "ID", dataIndex: "id" },
+    { title: "Profile", dataIndex: "first_name" },
+    { title: "Name", dataIndex: "last_name" },
     { title: "Age", dataIndex: "age" },
+    { title: "Address", dataIndex: "address" },
+    { title: "Email", dataIndex: "email" },
+    { title: "Person ID", dataIndex: "person_id" },
     {
       title: "Action",
       render: (_, record) => {
@@ -100,8 +57,16 @@ const User = () => {
 
   return (
     <PrivateLayout>
-      <h2 style={{fontSize:"32px",textTransform:"uppercase"}}>Danh sách người dùng</h2>
-      <Table columns={columns} dataSource={dataSource}></Table>
+      <h2 style={{ fontSize: "32px", textTransform: "uppercase" }}>
+        Danh sách người dùng
+      </h2>
+      <div className="user-search">
+        <Input ref={value} placeholder="Search by First name" />
+        <div className="user-search__btn" onClick={onSearch}>
+          Tìm
+        </div>
+      </div>
+      <Table columns={columns} dataSource={data}></Table>
     </PrivateLayout>
   );
 };

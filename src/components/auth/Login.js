@@ -8,7 +8,6 @@ import Cookies from "cookies-js";
 const Login = () => {
   const history = useHistory();
   const onFinish = (values) => {
-    console.log("Success:", values);
     axios
       .post(API_LOGIN, values)
       .then(function (res) {

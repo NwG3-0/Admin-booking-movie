@@ -16,7 +16,6 @@ const Movie =()=>{
             director:`Director ${index}`,
             rating: Math.floor(Math.random()*6),
             time:   Math.floor(Math.random()*120),
-            
           });
         }
         setDataSource(data);
