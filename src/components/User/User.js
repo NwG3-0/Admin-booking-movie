@@ -6,32 +6,35 @@ import { API_LIST_USER } from "../../config/endpointapi";
 import '../../style/User.css'
 
 const User = () => {
-  const [dataSource, setDataSource] = useState([]);
   const value = useRef()
   const [limit, setLimit] = useState(10);
+  const [total, setTotal] = useState();
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
-  
-  const getUser = async () => {
-    const params = {limit, page, keyword}
-    await axios.get(API_LIST_USER, {params})
-      .then(res => {
-        setData(res?.data?.data?.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
 
   useEffect(() => {
+    const getUser = async () => {
+      const params = {limit, page, keyword}
+      await axios.get(API_LIST_USER, {params})
+        .then(res => {
+          setData(res?.data?.data?.data)
+          setTotal(res?.data?.data?.total)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
     getUser()
-  }, [])
+  }, [limit, page, keyword])
 
   const onSearch = () => {
-    setKeyword(value.current.value)
-    console.log(value.current.input.value)
-    getUser()
+    setKeyword(value.current.input.value)
+  }
+
+  const onChangePage = (page, limit) => {
+    setPage(page)
+    setLimit(limit)
   }
 
   const columns = [
@@ -66,7 +69,15 @@ const User = () => {
           Tìm
         </div>
       </div>
-      <Table columns={columns} dataSource={data}></Table>
+      <Table 
+        columns={columns} 
+        pagination={{
+          total: total,
+          onChange: onChangePage,
+          showSizeChanger: true,
+          pageSizeOptions: [5, 10, 20, 30]
+        }} 
+        dataSource={data}/>
     </PrivateLayout>
   );
 };
