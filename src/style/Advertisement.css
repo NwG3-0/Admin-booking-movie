@@ -4,7 +4,7 @@
 .ant-table-thead > tr > th {
     text-align:center;
 }
-.movies-search{
+.advertisement-search{
     display: flex;
     justify-content: center;
     width: 60%;
@@ -12,13 +12,13 @@
     padding:10px;
 }
 
-.movies-search__btn{
+.advertisement-search__btn{
     padding: 10px 20px;
     background-color: rgb(144, 144, 253);
     color: white;
     cursor: pointer;
 }
-.movies-add__btn{
+.advertisement-add__btn{
     padding: 10px 20px;
     background-color: rgb(144, 144, 253);
     color: white;
@@ -29,4 +29,7 @@
 }
 .ant-col-2 {
     margin:auto;
+}
+a{
+    color:white;
 }

@@ -9,7 +9,7 @@ import { IoMdStarHalf } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 import { BiMovie } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { LOGIN, MOVIE, MOVIE_MODIFY, USER } from "../config/path";
+import { ADVERTISEMENT, LOGIN, MOVIE, MOVIE_MODIFY, USER } from "../config/path";
 import Logo from "../asset/Logo-main.png";
 import axios from "axios";
 import { API_LOGOUT } from "../config/endpointapi";
@@ -50,21 +50,19 @@ const PrivateLayout = ({ children }) => {
             <Menu.Item key="2" icon={<IoMdStarHalf />}>
               Đánh giá
             </Menu.Item>
-            <SubMenu key="sub1" icon={<BiMovie />} title="Phim">
-              <Menu.Item key="6">
-                <Link to={MOVIE}>Danh sách phim</Link>
-              </Menu.Item>
-              <Menu.Item key="8">
-                <Link to={MOVIE_MODIFY}>Thêm phim</Link>
-              </Menu.Item>
-            </SubMenu>
+            <Menu.Item key="3" icon={<BiMovie />}>
+              <Link to={MOVIE}>Phim</Link>{" "}
+            </Menu.Item>
             <Menu.Item key="4" icon={<IoMdStarHalf />}>
+              <Link to={ADVERTISEMENT}>
+
               Quảng cáo
+              </Link>
             </Menu.Item>
             <Menu.Item key="5" icon={<UserOutlined />}>
               <Link to={USER}>Người dùng</Link>
             </Menu.Item>
-            <Menu.Item key="9" icon={<FileOutlined />}>
+            <Menu.Item key="6" icon={<FileOutlined />}>
               Files
             </Menu.Item>
           </Menu>
