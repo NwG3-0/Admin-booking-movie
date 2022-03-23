@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import PrivateLayout from "../../Layout/PrivateLayout";
 import { Button, Col, Input, Row, Table } from "antd";
-import "../../style/Movie.css";
 import axios from "axios";
-import { API_MOVIES } from "../../config/endpointapi";
-import { MOVIE_MODIFY } from "../../config/path";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_LIST_ADVERTISEMENT } from "../../config/endpointapi";
+import { ADVERTISEMENT_MODIFY } from "../../config/path";
+import PrivateLayout from "../../Layout/PrivateLayout";
+import "../../style/Advertisement.css";
 
-const Movie = () => {
+const Advertisement = () => {
   const value = useRef();
   const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState();
@@ -15,10 +15,10 @@ const Movie = () => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   useEffect(() => {
-    const getmovies = async () => {
+    const getadvertisement = async () => {
       const params = { limit, page, keyword };
       await axios
-        .get(API_MOVIES, { params })
+        .get(API_LIST_ADVERTISEMENT, { params })
         .then((res) => {
           setData(res?.data?.data?.data);
           setTotal(res?.data?.data?.total);
@@ -27,7 +27,7 @@ const Movie = () => {
           console.log(err);
         });
     };
-    getmovies();
+    getadvertisement();
   }, [limit, page, keyword]);
   const onSearch = () => {
     setKeyword(value.current.input.value);
@@ -38,28 +38,22 @@ const Movie = () => {
     setLimit(limit);
   };
   const columns = [
-    { title: "ID Phim", dataIndex: "id" },
+    { title: "ID Quảng cáo", dataIndex: "id" },
     {
-      title: "Poster",
+      title: "Ảnh",
       render: (value, record) => {
         return (
           <>
-            <img src={value.poster}/>
+            <img src={value.image} />
           </>
         );
       },
     },
     {
-      title: "Name",
+      title: "Tên quảng cáo",
       dataIndex: "name",
     },
-    { title: "Loại phim", dataIndex: "dimension" },
-    { title: "Thể loại", dataIndex: "type_of_movie" },
-    { title: "Ngày khởi chiếu", dataIndex: "start_date" },
-    { title: "Thời lượng", dataIndex: "range_of_movie" },
-    { title: "Diễn viên", dataIndex: "actor" },
-    { title: "Đạo diễn", dataIndex: "director" },
-    { title: "Mô tả", dataIndex: "description" },
+
     {
       title: "Action",
       render: (value, record) => {
@@ -75,20 +69,20 @@ const Movie = () => {
   return (
     <PrivateLayout>
       <h2 style={{ fontSize: "32px", textTransform: "uppercase" }}>
-        Danh sách phim
+        Danh sách quảng cáo
       </h2>
       <Row>
-        <Col span={22}>
-          <div className="movies-search">
+        <Col span={20}>
+          <div className="advertisement-search">
             <Input ref={value} placeholder="Search by First name" />
-            <div className="movies-search__btn" onClick={onSearch}>
+            <div className="advertisement-search__btn" onClick={onSearch}>
               Tìm
             </div>
           </div>
         </Col>
-        <Col span={2}>
-          <div className="movies-add__btn" onClick={onSearch}>
-            <Link to={MOVIE_MODIFY}>Thêm phim</Link>
+        <Col span={4}>
+          <div className="advertisement-add__btn" onClick={onSearch}>
+            <Link to={ADVERTISEMENT_MODIFY}>Thêm quảng cáo</Link>
           </div>
         </Col>
       </Row>
@@ -106,4 +100,4 @@ const Movie = () => {
     </PrivateLayout>
   );
 };
-export default Movie;
+export default Advertisement;

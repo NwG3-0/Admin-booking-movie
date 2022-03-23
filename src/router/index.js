@@ -5,10 +5,12 @@ import Home from "../components/Home/Home";
 import Movie from "../components/Movie/Movie";
 import MovieModify from "../components/Movie/MovieModify";
 import User from "../components/User/User";
-import { HOME, LOGIN, MOVIE, MOVIE_MODIFY, USER } from "../config/path";
+import { ADVERTISEMENT, ADVERTISEMENT_MODIFY, HOME, LOGIN, MOVIE, MOVIE_MODIFY, USER } from "../config/path";
 import Cookies from "cookies-js";
 import { isLogin } from "../config/function";
 import { Redirect } from "react-router-dom";
+import Advertisement from "../components/Advertisement/Advertisement";
+import AdvertisementModify from "../components/Advertisement/AdvertisementModify";
 
 const AppRouter = () => {
   if (Cookies.get("token")) {
@@ -43,6 +45,17 @@ const AppRouter = () => {
         <Route
           path={LOGIN}
           component={() => (isLogin() ? <Redirect to={HOME} /> : <Login />)}
+        />
+                <Route
+          path={ADVERTISEMENT}
+          component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Advertisement />)}
+        />
+                <Route
+          path={ADVERTISEMENT_MODIFY}
+          exact
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <AdvertisementModify />
+          }
         />
       </Switch>
     </Router>

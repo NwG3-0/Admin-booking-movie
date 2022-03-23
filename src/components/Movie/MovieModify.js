@@ -8,7 +8,7 @@ import {
   DatePicker,
 } from "antd";
 import axios from "axios";
-import { API_STORE } from "../../config/endpointapi";
+import { API_MOVIES_STORE } from "../../config/endpointapi";
 import { useState } from "react";
 import Cookies from "cookies-js";
 import moment from "moment";
@@ -44,7 +44,7 @@ const MovieModify = () => {
   }
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     axios
-      .post(API_STORE, values)
+      .post(API_MOVIES_STORE, values)
       .then(function (res) {})
       .catch(function (err) {
         console.log(err);
@@ -171,6 +171,19 @@ const MovieModify = () => {
           rules={[{ required: true, message: "Nhập mô tả" }]}
         >
           <Input.TextArea rows={5} showCount maxLength={100} />
+        </Form.Item>
+        <Form.Item
+          {...formItemLayout}
+          name="poster"
+          label="Poster"
+          rules={[
+            {
+              required: true,
+              message: "Nhập ảnh",
+            },
+          ]}
+        >
+          <Input />
         </Form.Item>
         <Form.Item
           {...formItemLayout}

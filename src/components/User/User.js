@@ -20,6 +20,7 @@ const User = () => {
         .then(res => {
           setData(res?.data?.data?.data)
           setTotal(res?.data?.data?.total)
+          console.log(res?.data?.data?.data);
         })
         .catch(err => {
           console.log(err)
@@ -47,7 +48,7 @@ const User = () => {
     { title: "Person ID", dataIndex: "person_id" },
     {
       title: "Action",
-      render: (_, record) => {
+      render: (value, record) => {
         return (
           <>
             <Button>Sửa</Button>
