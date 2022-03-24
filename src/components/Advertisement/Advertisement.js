@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { API_LIST_ADVERTISEMENT } from "../../config/endpointapi";
-import { ADVERTISEMENT_MODIFY } from "../../config/path";
+import { ADVERTISEMENT_CREATE } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
 import "../../style/Advertisement.css";
 
@@ -82,7 +82,7 @@ const Advertisement = () => {
         </Col>
         <Col span={4}>
           <div className="advertisement-add__btn" onClick={onSearch}>
-            <Link to={ADVERTISEMENT_MODIFY}>Thêm quảng cáo</Link>
+            <Link to={ADVERTISEMENT_CREATE}>Thêm quảng cáo</Link>
           </div>
         </Col>
       </Row>

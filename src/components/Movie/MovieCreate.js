@@ -1,51 +1,52 @@
 import PrivateLayout from "../../Layout/PrivateLayout";
-import {
-  Form,
-  Select,
-  InputNumber,
-  Button,
-  Input,
-  DatePicker,
-} from "antd";
+import { Form, Select, InputNumber, Button, Input, DatePicker } from "antd";
 import axios from "axios";
 import { API_MOVIES_STORE } from "../../config/endpointapi";
 import { useState } from "react";
 import Cookies from "cookies-js";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
+import { MOVIE } from "../../config/path";
 
+const { Option } = Select;
 
-const MovieModify = () => {
+const MovieCreate = () => {
   const [token] = useState(Cookies?.get("token"));
-  const onChange = (e) => {
-    console.log(e.target.value);
-  };
-  const { Option } = Select;
+  const history = useHistory();
+
+  // const onChange = (e) => {
+  //   console.log(e.target.value);
+  // };
 
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
 
-  const normFile = (e) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
+  // const normFile = (e) => {
+  //   console.log("Upload event:", e);
+  //   if (Array.isArray(e)) {
+  //     return e;
+  //   }
+  //   return e && e.fileList;
+  // };
+
   const onFinish = (values) => {
-    const { type_of_movie,start_date } = values;
-    console.log("Received values of form: ", values);
+    const { type_of_movie, start_date } = values;
+
     if (type_of_movie) {
       values.type_of_movie = type_of_movie.toString();
     }
-    if(start_date){
-      values.start_date = moment(start_date).format('YYYY-MM-DD');
-  }
+    if (start_date) {
+      values.start_date = moment(start_date).format("YYYY-MM-DD");
+    }
+
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     axios
       .post(API_MOVIES_STORE, values)
-      .then(function (res) {})
+      .then(function (res) {
+        history.push(MOVIE);
+      })
       .catch(function (err) {
         console.log(err);
       });
@@ -53,11 +54,7 @@ const MovieModify = () => {
 
   return (
     <PrivateLayout>
-      <Form
-        name="validate_other"
-        {...formItemLayout}
-        onFinish={onFinish}
-      >
+      <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
         <h2 style={{ fontSize: "2rem", textTransform: "uppercase" }}>
           Thêm phim
         </h2>
@@ -208,4 +205,4 @@ const MovieModify = () => {
     </PrivateLayout>
   );
 };
-export default MovieModify;
+export default MovieCreate;

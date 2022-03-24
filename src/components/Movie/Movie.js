@@ -1,19 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import PrivateLayout from "../../Layout/PrivateLayout";
 import { Button, Col, Input, Row, Table } from "antd";
-import "../../style/Movie.css";
 import axios from "axios";
-import { API_MOVIES } from "../../config/endpointapi";
-import { MOVIE_MODIFY } from "../../config/path";
+import { API_MOVIES, API_MOVIES_DELETE } from "../../config/endpointapi";
+import { MOVIE_CREATE, MOVIE_UPDATE } from "../../config/path";
 import { Link } from "react-router-dom";
+import "../../style/Movie.css";
+import { useHistory } from "react-router-dom";
+import { bindParam } from "../../config/function";
 
 const Movie = () => {
   const value = useRef();
+  const [status, setStatus] = useState(false)
   const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState();
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
+  const history = useHistory()
+
   useEffect(() => {
     const getmovies = async () => {
       const params = { limit, page, keyword };
@@ -28,31 +33,41 @@ const Movie = () => {
         });
     };
     getmovies();
-  }, [limit, page, keyword]);
+  }, [status, limit, page, keyword]);
+
   const onSearch = () => {
     setKeyword(value.current.input.value);
   };
+
+  const onDelete = async (id) => {
+    await axios.post(`${API_MOVIES_DELETE}/${id}`)
+      .then(res => {
+        setStatus(!status)
+      })
+  }
 
   const onChangePage = (page, limit) => {
     setPage(page);
     setLimit(limit);
   };
+
+  const onSwitchUpdate = (id) => {
+    history.push(bindParam(MOVIE_UPDATE, { id }))
+  }
+
   const columns = [
     { title: "ID Phim", dataIndex: "id" },
     {
       title: "Poster",
       render: (value, record) => {
         return (
-          <>
+          <div className="movie-list__img">
             <img src={value.poster}/>
-          </>
+          </div>
         );
       },
     },
-    {
-      title: "Name",
-      dataIndex: "name",
-    },
+    { title: "Name", dataIndex: "name", },
     { title: "Loại phim", dataIndex: "dimension" },
     { title: "Thể loại", dataIndex: "type_of_movie" },
     { title: "Ngày khởi chiếu", dataIndex: "start_date" },
@@ -63,10 +78,11 @@ const Movie = () => {
     {
       title: "Action",
       render: (value, record) => {
+        console.log(value)
         return (
           <>
-            <Button>Sửa</Button>
-            <Button>Xóa</Button>
+            <Button onClick={() => onSwitchUpdate(value?.id)}>Sửa</Button>
+            <Button onClick={() => onDelete(value?.id)}>Xóa</Button>
           </>
         );
       },
@@ -88,13 +104,14 @@ const Movie = () => {
         </Col>
         <Col span={2}>
           <div className="movies-add__btn" onClick={onSearch}>
-            <Link to={MOVIE_MODIFY}>Thêm phim</Link>
+            <Link to={MOVIE_CREATE}>Thêm phim</Link>
           </div>
         </Col>
       </Row>
 
       <Table
         columns={columns}
+        className="movie-table"
         pagination={{
           total: total,
           onChange: onChangePage,
