@@ -3,14 +3,24 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "../components/auth/Login";
 import Home from "../components/Home/Home";
 import Movie from "../components/Movie/Movie";
-import MovieModify from "../components/Movie/MovieModify";
 import User from "../components/User/User";
-import { ADVERTISEMENT, ADVERTISEMENT_MODIFY, HOME, LOGIN, MOVIE, MOVIE_MODIFY, USER } from "../config/path";
+import {
+  ADVERTISEMENT,
+  ADVERTISEMENT_CREATE,
+  HOME,
+  LOGIN,
+  MOVIE,
+  MOVIE_CREATE,
+  MOVIE_UPDATE,
+  USER,
+} from "../config/path";
 import Cookies from "cookies-js";
 import { isLogin } from "../config/function";
 import { Redirect } from "react-router-dom";
 import Advertisement from "../components/Advertisement/Advertisement";
 import AdvertisementModify from "../components/Advertisement/AdvertisementModify";
+import MovieCreate from "../components/Movie/MovieCreate";
+import MovieUpdate from "../components/Movie/MovieUpdate";
 
 const AppRouter = () => {
   if (Cookies.get("token")) {
@@ -31,27 +41,37 @@ const AppRouter = () => {
           component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <User />)}
         />
         <Route
+          path={LOGIN}
+          component={() => (isLogin() ? <Redirect to={HOME} /> : <Login />)}
+        />
+        {/*Route movie :*/}
+        <Route
           path={MOVIE}
           exact
           component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Movie />)}
         />
         <Route
-          path={MOVIE_MODIFY}
+          path={MOVIE_CREATE}
           exact
           component={() =>
-            !isLogin() ? <Redirect to={LOGIN} /> : <MovieModify />
+            !isLogin() ? <Redirect to={LOGIN} /> : <MovieCreate />
           }
         />
         <Route
-          path={LOGIN}
-          component={() => (isLogin() ? <Redirect to={HOME} /> : <Login />)}
+          path={MOVIE_UPDATE}
+          exact
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <MovieUpdate />
+          }
         />
-                <Route
+        <Route
           path={ADVERTISEMENT}
-          component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Advertisement />)}
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <Advertisement />
+          }
         />
-                <Route
-          path={ADVERTISEMENT_MODIFY}
+        <Route
+          path={ADVERTISEMENT_CREATE}
           exact
           component={() =>
             !isLogin() ? <Redirect to={LOGIN} /> : <AdvertisementModify />
