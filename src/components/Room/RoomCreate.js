@@ -1,13 +1,17 @@
 import { Button, Form, Input } from "antd";
+import axios from "axios";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { API_ROOM_STORE } from "../../config/endpointapi";
+import { ROOM } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
 import Cookies from "cookies-js";
-import axios from "axios";
-import { API_ADVERTISEMENT_STORE } from "../../config/endpointapi";
 
 
-const AdvertisementModify = () => {
+const RoomCreate=()=>{
     const [token] = useState(Cookies?.get("token"));
+    const history = useHistory();
+
     const onChange = (e) => {
       console.log(e.target.value);
     };
@@ -26,28 +30,28 @@ const AdvertisementModify = () => {
     const onFinish = (values) => {
       axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
       axios
-        .post(API_ADVERTISEMENT_STORE, values)
-        console.log(values)
-        .then(function (res) {})
+        .post(API_ROOM_STORE, values)
+        .then(function (res) {
+          history.push(ROOM);
+        })
         .catch(function (err) {
           console.log(err);
         });
     };
-  return(
-      <PrivateLayout>
-               <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
+    return(
+        <PrivateLayout>
+             <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
         <h2 style={{ fontSize: "2rem", textTransform: "uppercase" }}>
-          Thêm quảng cáo
+          Thêm phòng
         </h2>
-
         <Form.Item
           {...formItemLayout}
           name="name"
-          label="Tên quảng cáo"
+          label="Tên phòng"
           rules={[
             {
               required: true,
-              message: "Điền tên quảng cáo",
+              message: "Điền tên phòng",
             },
           ]}
         >
@@ -55,12 +59,12 @@ const AdvertisementModify = () => {
         </Form.Item>
         <Form.Item
           {...formItemLayout}
-          name="image"
-          label="Ảnh"
+          name="number_seat"
+          label="Số lượng ghế"
           rules={[
             {
               required: true,
-              message: "Upload ảnh",
+              message: "Nhập số lượng ghế",
             },
           ]}
         >
@@ -74,8 +78,9 @@ const AdvertisementModify = () => {
           </Button>
         </Form.Item>
       </Form>
-      </PrivateLayout>
 
-  );
+        </PrivateLayout>
+    );
+    
 };
-export default AdvertisementModify;
+export default RoomCreate;

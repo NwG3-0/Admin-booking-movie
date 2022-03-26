@@ -10,3 +10,7 @@ export const MOVIE_UPDATE = "/movie_update/:id"
 // path advertisement
 export const ADVERTISEMENT ='/advertisement'
 export const ADVERTISEMENT_CREATE ='/advertisement_create'
+
+//path room
+export const ROOM ='/room'
+export const ROOM_CREATE ='/room_create'

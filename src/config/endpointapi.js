@@ -12,6 +12,20 @@ export const API_MOVIES = `${BASE_API}/api/movies`
 export const API_MOVIES_DELETE = `${BASE_API}/api/movies/delete`
 export const API_MOVIES_DETAIL = `${BASE_API}/api/movies/:id`
 export const API_MOVIES_UPDATE = `${BASE_API}/api/movies/update`
+
 // Api advertisement
 export const API_LIST_ADVERTISEMENT =`${BASE_API}/api/advertise`
 export const API_ADVERTISEMENT_STORE=`${BASE_API}/api/advertise/store`
+export const API_ADVERTISEMENT_UPDATE =`${BASE_API}/api/advertise/update`
+export const API_ADVERTISEMENT_DELETE =`${BASE_API}/api/advertise/delete/:id`
+
+//Api room
+export const API_LIST_ROOM =`${BASE_API}/api/room`
+export const API_ROOM_STORE =`${BASE_API}/api/room/store`
+export const API_ROOM_UPDATE =`${BASE_API}/api/room/update`
+export const API_ROOM_DELETE =`${BASE_API}/api/room/delete/:id`
+export const API_ROOM_DETAIL =`${BASE_API}/api/room/:id`
+
+
+
+
