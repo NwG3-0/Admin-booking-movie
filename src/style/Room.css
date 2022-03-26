@@ -4,7 +4,7 @@
 .ant-table-thead > tr > th {
     text-align:center;
 }
-.advertisement-search{
+.room-search{
     display: flex;
     justify-content: center;
     width: 60%;
@@ -12,13 +12,13 @@
     padding:10px;
 }
 
-.advertisement-search__btn{
+.room-search__btn{
     padding: 10px 20px;
     background-color: rgb(144, 144, 253);
     color: white;
     cursor: pointer;
 }
-.advertisement-add__btn{
+.room-add__btn{
     padding: 10px 20px;
     background-color: rgb(144, 144, 253);
     color: white;
@@ -33,7 +33,7 @@
 a{
     color:white;
 }
-.advertisement-list__img img{
+.room-list__img img{
     width: 400px;
     height: 200px;
     object-fit: contain;

@@ -12,15 +12,19 @@ import {
   MOVIE,
   MOVIE_CREATE,
   MOVIE_UPDATE,
+  ROOM,
+  ROOM_CREATE,
   USER,
 } from "../config/path";
 import Cookies from "cookies-js";
 import { isLogin } from "../config/function";
 import { Redirect } from "react-router-dom";
 import Advertisement from "../components/Advertisement/Advertisement";
-import AdvertisementModify from "../components/Advertisement/AdvertisementModify";
 import MovieCreate from "../components/Movie/MovieCreate";
 import MovieUpdate from "../components/Movie/MovieUpdate";
+import AdvertisementCreate from "../components/Advertisement/AdvertisementCreate";
+import Room from "../components/Room/Room";
+import RoomCreate from "../components/Room/RoomCreate";
 
 const AppRouter = () => {
   if (Cookies.get("token")) {
@@ -64,6 +68,7 @@ const AppRouter = () => {
             !isLogin() ? <Redirect to={LOGIN} /> : <MovieUpdate />
           }
         />
+        {/*Route advertisement :*/}
         <Route
           path={ADVERTISEMENT}
           component={() =>
@@ -74,7 +79,19 @@ const AppRouter = () => {
           path={ADVERTISEMENT_CREATE}
           exact
           component={() =>
-            !isLogin() ? <Redirect to={LOGIN} /> : <AdvertisementModify />
+            !isLogin() ? <Redirect to={LOGIN} /> : <AdvertisementCreate />
+          }
+        />
+        {/*Route room :*/}
+        <Route
+          path={ROOM}
+          component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Room />)}
+        />
+        <Route
+          path={ROOM_CREATE}
+          exact
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <RoomCreate />
           }
         />
       </Switch>
