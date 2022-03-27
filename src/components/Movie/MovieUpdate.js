@@ -1,7 +1,7 @@
 import PrivateLayout from "../../Layout/PrivateLayout";
 import { Form, Select, InputNumber, Button, Input, DatePicker } from "antd";
 import axios from "axios";
-import { API_MOVIES_DETAIL, API_MOVIES_STORE, API_MOVIES_UPDATE } from "../../config/endpointapi";
+import { API_MOVIES_DETAIL, API_MOVIES_UPDATE } from "../../config/endpointapi";
 import { useEffect, useState } from "react";
 import Cookies from "cookies-js";
 import moment from "moment";
@@ -13,69 +13,70 @@ import { bindParam } from "../../config/function";
 const { Option } = Select;
 
 const MovieUpdate = () => {
-	const { id } = useParams()
-	const [data, setData] = useState({})
+  const { id } = useParams();
+  const [data, setData] = useState({});
   const [token] = useState(Cookies?.get("token"));
-	const [form] = Form.useForm()
-	const [defaultValue, setDefaultValue] = useState({})
+  const [form] = Form.useForm();
+  const [defaultValue, setDefaultValue] = useState({});
   const history = useHistory();
-	
-	const getData = async () => {
-		await axios.get(bindParam(API_MOVIES_DETAIL, { id }))
-      .then(res => {	
-        setData(res?.data?.data)
-			})
-			.catch(err => {
-				console.log(err)
-			})
-	}
-		
-	useEffect(() => {
-		if(data){
-			form.setFieldsValue({
-				name: data?.name,
-				range_of_movie: data?.range_of_movie,
-				start_date: moment(data?.start_date),
-				dimension: data?.dimension,
-				type_of_movie: data?.type_of_movie?.split(","),
-				range_age: data?.range_age,
-				actor: data?.actor,
-				direct: data?.director,
-				description: data?.description,
-				poster: data?.poster,
-				trailer: data?.trailer
-			})
-		}
-	}, [data, form])
 
-	useEffect(() => {
-		axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-		getData()
-	}, [token])
+  const getData = async () => {
+    await axios
+      .get(bindParam(API_MOVIES_DETAIL, { id }))
+      .then((res) => {
+        setData(res?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-//   const onChange = (e) => {
-//     console.log(e.target.value);
-//   };
+  useEffect(() => {
+    if (data) {
+      form.setFieldsValue({
+        name: data?.name,
+        range_of_movie: data?.range_of_movie,
+        start_date: moment(data?.start_date),
+        dimension: data?.dimension,
+        type_of_movie: data?.type_of_movie?.split(","),
+        range_age: data?.range_age,
+        actor: data?.actor,
+        direct: data?.director,
+        description: data?.description,
+        poster: data?.poster,
+        trailer: data?.trailer,
+      });
+    }
+  }, [data, form]);
+
+  useEffect(() => {
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    getData();
+  }, [token]);
+
+  //   const onChange = (e) => {
+  //     console.log(e.target.value);
+  //   };
 
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
 
-//   const normFile = (e) => {
-//     console.log("Upload event:", e);
-//     if (Array.isArray(e)) {
-//       return e;
-//     }
-//     return e && e.fileList;
-//   };
+  //   const normFile = (e) => {
+  //     console.log("Upload event:", e);
+  //     if (Array.isArray(e)) {
+  //       return e;
+  //     }
+  //     return e && e.fileList;
+  //   };
 
   const onFinish = (values) => {
     const { type_of_movie, start_date } = values;
 
-		if(id){
-			values.id = Number(id)
-		}
+    if (id) {
+      values.id = Number(id);
+    }
     if (type_of_movie) {
       values.type_of_movie = type_of_movie.toString();
     }
@@ -94,14 +95,20 @@ const MovieUpdate = () => {
       });
   };
 
-	console.log(data)
+  console.log(data);
   return (
     <PrivateLayout>
-      <Form name="validate_other" initialValues={data} {...formItemLayout} form={form} onFinish={onFinish}>
+      <Form
+        name="validate_other"
+        initialValues={data}
+        {...formItemLayout}
+        form={form}
+        onFinish={onFinish}
+      >
         <h2 style={{ fontSize: "2rem", textTransform: "uppercase" }}>
           sửa phim
         </h2>
-				
+
         <Form.Item
           {...formItemLayout}
           name="name"
@@ -113,7 +120,7 @@ const MovieUpdate = () => {
             },
           ]}
         >
-          <Input placeholder="Nhập tên bộ phim"/>
+          <Input placeholder="Nhập tên bộ phim" />
         </Form.Item>
         <Form.Item
           {...formItemLayout}
