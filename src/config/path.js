@@ -14,3 +14,11 @@ export const ADVERTISEMENT_CREATE ='/advertisement_create'
 //path room
 export const ROOM ='/room'
 export const ROOM_CREATE ='/room_create'
+
+//path seat
+export const SEAT = '/seat'
+export const SEAT_CREATE = '/seat_create'
+
+// path showtime
+export const SHOWTIME = '/showtime'
+export const SHOWTIME_CREATE = '/showtime-create'

@@ -14,6 +14,10 @@ import {
   MOVIE_UPDATE,
   ROOM,
   ROOM_CREATE,
+  SEAT,
+  SEAT_CREATE,
+  SHOWTIME,
+  SHOWTIME_CREATE,
   USER,
 } from "../config/path";
 import Cookies from "cookies-js";
@@ -25,6 +29,10 @@ import MovieUpdate from "../components/Movie/MovieUpdate";
 import AdvertisementCreate from "../components/Advertisement/AdvertisementCreate";
 import Room from "../components/Room/Room";
 import RoomCreate from "../components/Room/RoomCreate";
+import Seat from "../components/Seat/Seat";
+import SeatCreate from "../components/Seat/SeatCreate";
+import ShowTime from "../components/Showtime/Showtime";
+import ShowTimeCreate from "../components/Showtime/ShowtimeCreate";
 
 const AppRouter = () => {
   if (Cookies.get("token")) {
@@ -92,6 +100,34 @@ const AppRouter = () => {
           exact
           component={() =>
             !isLogin() ? <Redirect to={LOGIN} /> : <RoomCreate />
+          }
+        />
+        <Route
+          path={SEAT}
+          exact
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <Seat />
+          }
+        />
+        <Route
+          path={SEAT_CREATE}
+          exact
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <SeatCreate />
+          }
+        />
+        <Route
+          path={SHOWTIME}
+          exact
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <ShowTime />
+          }
+        />
+        <Route
+          path={SHOWTIME_CREATE}
+          exact
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <ShowTimeCreate />
           }
         />
       </Switch>

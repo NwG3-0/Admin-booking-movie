@@ -11,10 +11,13 @@ const Login = () => {
     axios
       .post(API_LOGIN, values)
       .then(function (res) {
-        Cookies.set("data", JSON.stringify(res.data.user));
-        Cookies.set("token", res.data.access_token);
-        history.push(HOME);
-        console.log(res);
+        if(res?.data?.user?.admin === 1) {
+          Cookies.set("data", JSON.stringify(res.data.user));
+          Cookies.set("token", res.data.access_token);
+          history.push(HOME);
+        }else{
+          alert('Bạn không có quyền')
+        }
       })
       .catch(function (err) {
         console.log(err);

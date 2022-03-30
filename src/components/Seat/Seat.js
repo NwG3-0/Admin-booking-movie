@@ -1,15 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import PrivateLayout from "../../Layout/PrivateLayout";
 import { Button, Col, Input, Row, Table } from "antd";
 import axios from "axios";
-import { API_MOVIES, API_MOVIES_DELETE } from "../../config/endpointapi";
-import { MOVIE_CREATE, MOVIE_UPDATE } from "../../config/path";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { API_SEAT, API_SEAT_DELETE } from "../../config/endpointapi";
 import { bindParam } from "../../config/function";
+import { SEAT_CREATE } from "../../config/path";
+import PrivateLayout from "../../Layout/PrivateLayout";
 import "../../style/Movie.css";
 
-const Movie = () => {
+const Seat = () => {
   const value = useRef();
   const [status, setStatus] = useState(false);
   const [limit, setLimit] = useState(10);
@@ -19,11 +18,15 @@ const Movie = () => {
   const [data, setData] = useState([]);
   const history = useHistory();
 
+  const onSearch = () => {
+    setKeyword(value.current.input.value);
+  };
+
   useEffect(() => {
-    const getmovies = async () => {
+    const getseats = async () => {
       const params = { limit, page, keyword };
       await axios
-        .get(API_MOVIES, { params })
+        .get(API_SEAT, { params })
         .then((res) => {
           setData(res?.data?.data?.data);
           setTotal(res?.data?.data?.total);
@@ -32,15 +35,11 @@ const Movie = () => {
           console.log(err);
         });
     };
-    getmovies();
+    getseats();
   }, [status, limit, page, keyword]);
 
-  const onSearch = () => {
-    setKeyword(value.current.input.value);
-  };
-
   const onDelete = async (id) => {
-    await axios.post(`${API_MOVIES_DELETE}/${id}`).then((res) => {
+    await axios.post(bindParam(API_SEAT_DELETE, { id })).then((res) => {
       setStatus(!status);
     });
   };
@@ -50,37 +49,23 @@ const Movie = () => {
     setLimit(limit);
   };
 
-  const onSwitchUpdate = (id) => {
-    history.push(bindParam(MOVIE_UPDATE, { id }));
-  };
+  //   const onSwitchUpdate = (id) => {
+  //     history.push(bindParam(MOVIE_UPDATE, { id }));
+  //   };
 
   const columns = [
-    { title: "ID Phim", dataIndex: "id" },
-    {
-      title: "Poster",
-      render: (value, record) => {
-        return (
-          <div className="movie-list__img">
-            <img src={value.poster} />
-          </div>
-        );
-      },
-    },
-    { title: "Name", dataIndex: "name" },
-    { title: "Loại phim", dataIndex: "dimension" },
-    { title: "Thể loại", dataIndex: "type_of_movie" },
-    { title: "Ngày khởi chiếu", dataIndex: "start_date" },
-    { title: "Thời lượng", dataIndex: "range_of_movie" },
-    { title: "Diễn viên", dataIndex: "actor" },
-    { title: "Đạo diễn", dataIndex: "director" },
-    { title: "Mô tả", dataIndex: "description" },
+    { title: "ID Seat", dataIndex: "id" },
+    { title: "Hàng", dataIndex: "row" },
+    { title: "Số thứ tự", dataIndex: "order" },
+    { title: "Loại ghế", dataIndex: "type_seat" },
+    { title: "Phòng chiếu", dataIndex: ["room", "name"] },
     {
       title: "Action",
       render: (value, record) => {
         console.log(value);
         return (
           <>
-            <Button onClick={() => onSwitchUpdate(value?.id)}>Sửa</Button>
+            {/* <Button onClick={() => onSwitchUpdate(value?.id)}>Sửa</Button> */}
             <Button onClick={() => onDelete(value?.id)}>Xóa</Button>
           </>
         );
@@ -103,7 +88,7 @@ const Movie = () => {
         </Col>
         <Col span={2}>
           <div className="movies-add__btn" onClick={onSearch}>
-            <Link to={MOVIE_CREATE}>Thêm phim</Link>
+            <Link to={SEAT_CREATE}>Thêm ghế</Link>
           </div>
         </Col>
       </Row>
@@ -122,4 +107,5 @@ const Movie = () => {
     </PrivateLayout>
   );
 };
-export default Movie;
+
+export default Seat;

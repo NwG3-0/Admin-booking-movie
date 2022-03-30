@@ -9,6 +9,7 @@ export const API_LIST_USER = `${BASE_API}/api/auth/list`
 // Api movie
 export const API_MOVIES_STORE = `${BASE_API}/api/movies/store`
 export const API_MOVIES = `${BASE_API}/api/movies`
+export const API_MOVIES_SELECT = `${API_MOVIES}/select`
 export const API_MOVIES_DELETE = `${BASE_API}/api/movies/delete`
 export const API_MOVIES_DETAIL = `${BASE_API}/api/movies/:id`
 export const API_MOVIES_UPDATE = `${BASE_API}/api/movies/update`
@@ -21,11 +22,21 @@ export const API_ADVERTISEMENT_DELETE =`${BASE_API}/api/advertise/delete/:id`
 
 //Api room
 export const API_LIST_ROOM =`${BASE_API}/api/room`
+export const API_ROOM_SELECT = `${API_LIST_ROOM}/select`
 export const API_ROOM_STORE =`${BASE_API}/api/room/store`
 export const API_ROOM_UPDATE =`${BASE_API}/api/room/update`
 export const API_ROOM_DELETE =`${BASE_API}/api/room/delete/:id`
 export const API_ROOM_DETAIL =`${BASE_API}/api/room/:id`
 
+//Api seat
+export const API_SEAT = `${BASE_API}/api/seat`
+export const API_SEAT_CREATE = `${BASE_API}/api/seat/store`
+export const API_SEAT_DELETE = `${BASE_API}/api/seat/delete/:id`
+export const API_SEAT_UPDATE = `${BASE_API}/api/seat/update`
+
+//Api showtime
+export const API_SHOWTIME = `${BASE_API}/api/showtime`
+export const API_SHOWTIME_CREATE = `${API_SHOWTIME}/store`
 
 
 

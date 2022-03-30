@@ -3,14 +3,16 @@ import React from "react";
 import "../style/Layout.css";
 import { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import { FileOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoMdStarHalf } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 import { BiMovie } from "react-icons/bi";
 import { BsFillDoorOpenFill } from "react-icons/bs";
+import { BsFillCalendarWeekFill } from "react-icons/bs";
+import { FaChair } from "react-icons/fa"
 import { Link } from "react-router-dom";
-import { ADVERTISEMENT, LOGIN, MOVIE, MOVIE_MODIFY, ROOM, USER } from "../config/path";
+import { ADVERTISEMENT, LOGIN, MOVIE, ROOM, SEAT, SHOWTIME, USER } from "../config/path";
 import Logo from "../asset/Logo-main.png";
 import axios from "axios";
 import { API_LOGOUT } from "../config/endpointapi";
@@ -56,7 +58,6 @@ const PrivateLayout = ({ children }) => {
             </Menu.Item>
             <Menu.Item key="4" icon={<IoMdStarHalf />}>
               <Link to={ADVERTISEMENT}>
-
               Quảng cáo
               </Link>
             </Menu.Item>
@@ -65,6 +66,12 @@ const PrivateLayout = ({ children }) => {
             </Menu.Item>
             <Menu.Item key="6" icon={<BsFillDoorOpenFill />}>
               <Link to={ROOM}>Phòng chiếu</Link>
+            </Menu.Item>
+            <Menu.Item key="7" icon={<FaChair />}>
+              <Link to={SEAT}>Ghế ngồi</Link>
+            </Menu.Item>
+            <Menu.Item key="7" icon={<BsFillCalendarWeekFill />}>
+              <Link to={SHOWTIME}>Suất chiếu</Link>
             </Menu.Item>
           </Menu>
         </Sider>
