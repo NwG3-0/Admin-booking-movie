@@ -1,15 +1,15 @@
-import { useEffect, useRef, useState } from "react";
 import PrivateLayout from "../../Layout/PrivateLayout";
 import { Button, Col, Input, Row, Table } from "antd";
 import axios from "axios";
-import { API_MOVIES, API_MOVIES_DELETE } from "../../config/endpointapi";
-import { MOVIE_CREATE, MOVIE_UPDATE } from "../../config/path";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { API_SEAT, API_SEAT_DELETE, API_SHOWTIME } from "../../config/endpointapi";
 import { bindParam } from "../../config/function";
+import { SEAT_CREATE, SHOWTIME_CREATE } from "../../config/path";
+import moment from "moment";
 import "../../style/Movie.css";
 
-const Movie = () => {
+const ShowTime = () => {
   const value = useRef();
   const [status, setStatus] = useState(false);
   const [limit, setLimit] = useState(10);
@@ -19,11 +19,15 @@ const Movie = () => {
   const [data, setData] = useState([]);
   const history = useHistory();
 
+  const onSearch = () => {
+    setKeyword(value.current.input.value);
+  };
+
   useEffect(() => {
-    const getmovies = async () => {
+    const getShowtime = async () => {
       const params = { limit, page, keyword };
       await axios
-        .get(API_MOVIES, { params })
+        .get(API_SHOWTIME, { params })
         .then((res) => {
           setData(res?.data?.data?.data);
           setTotal(res?.data?.data?.total);
@@ -32,17 +36,13 @@ const Movie = () => {
           console.log(err);
         });
     };
-    getmovies();
+    getShowtime();
   }, [status, limit, page, keyword]);
 
-  const onSearch = () => {
-    setKeyword(value.current.input.value);
-  };
-
   const onDelete = async (id) => {
-    await axios.post(`${API_MOVIES_DELETE}/${id}`).then((res) => {
-      setStatus(!status);
-    });
+    // await axios.post(bindParam(API_SEAT_DELETE, { id })).then((res) => {
+    //   setStatus(!status);
+    // });
   };
 
   const onChangePage = (page, limit) => {
@@ -50,45 +50,36 @@ const Movie = () => {
     setLimit(limit);
   };
 
-  const onSwitchUpdate = (id) => {
-    history.push(bindParam(MOVIE_UPDATE, { id }));
-  };
-
   const columns = [
-    { title: "ID Phim", dataIndex: "id" },
-    {
-      title: "Poster",
-      render: (value, record) => {
-        return (
-          <div className="movie-list__img">
-            <img src={value.poster} />
-          </div>
-        );
-      },
+    { 
+      title: "ID Suất chiếu", 
+      dataIndex: "id" 
     },
-    { title: "Name", dataIndex: "name" },
-    { title: "Loại phim", dataIndex: "dimension" },
-    { title: "Thể loại", dataIndex: "type_of_movie" },
-    { title: "Ngày khởi chiếu", dataIndex: "start_date" },
-    { title: "Thời lượng", dataIndex: "range_of_movie" },
-    { title: "Diễn viên", dataIndex: "actor" },
-    { title: "Đạo diễn", dataIndex: "director" },
-    { title: "Mô tả", dataIndex: "description" },
+    { 
+      title: "Ngày chiếu", 
+      dataIndex: "show_date"
+    },
+    { 
+      title: "Giờ chiếu", 
+      dataIndex: "show_time",
+    },
+    { title: "Phòng chiếu", dataIndex: ["room", "name"] },
+    { title: "Phim chiếu", dataIndex: ["movie", "name"] },
     {
       title: "Action",
       render: (value, record) => {
         console.log(value);
         return (
           <>
-            <Button onClick={() => onSwitchUpdate(value?.id)}>Sửa</Button>
+            {/* <Button onClick={() => onSwitchUpdate(value?.id)}>Sửa</Button> */}
             <Button onClick={() => onDelete(value?.id)}>Xóa</Button>
           </>
         );
       },
     },
   ];
-  return (
-    <PrivateLayout>
+
+  return <PrivateLayout>
       <h2 style={{ fontSize: "32px", textTransform: "uppercase" }}>
         Danh sách phim
       </h2>
@@ -103,7 +94,7 @@ const Movie = () => {
         </Col>
         <Col span={2}>
           <div className="movies-add__btn" onClick={onSearch}>
-            <Link to={MOVIE_CREATE}>Thêm phim</Link>
+            <Link to={SHOWTIME_CREATE}>Thêm suất chiếu</Link>
           </div>
         </Col>
       </Row>
@@ -119,7 +110,7 @@ const Movie = () => {
         }}
         dataSource={data}
       />
-    </PrivateLayout>
-  );
+  </PrivateLayout>;
 };
-export default Movie;
+
+export default ShowTime;
