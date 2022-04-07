@@ -67,6 +67,7 @@ const ShowTimeCreate = () => {
   };
 
   useEffect(() => {
+    
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     const getMovieSelect = async () => {
       await axios
@@ -86,7 +87,7 @@ const ShowTimeCreate = () => {
     <PrivateLayout>
       <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
         <h2 style={{ fontSize: "2rem", textTransform: "uppercase" }}>
-          Thêm ghế
+          Thêm suất chiếu
         </h2>
 
         <Form.Item
@@ -127,7 +128,7 @@ const ShowTimeCreate = () => {
             },
           ]}
         >
-          <Select placeholder="Please select favourite colors">
+          <Select placeholder="Please select rooms">
             {roomSelect?.map((movie) => {
               return <Option value={movie?.id}>{movie?.name}</Option>;
             })}
@@ -144,7 +145,7 @@ const ShowTimeCreate = () => {
             },
           ]}
         >
-          <Select placeholder="Please select favourite colors">
+          <Select placeholder="Please select movies">
             {movieSelect?.map((movie) => {
               return <Option value={movie?.id}>{movie?.name}</Option>;
             })}

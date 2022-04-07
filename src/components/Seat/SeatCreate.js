@@ -1,7 +1,11 @@
 import PrivateLayout from "../../Layout/PrivateLayout";
 import { Form, Select, InputNumber, Button, Input, DatePicker } from "antd";
 import axios from "axios";
-import { API_MOVIES_SELECT, API_ROOM_SELECT, API_SEAT_CREATE } from "../../config/endpointapi";
+import {
+  API_MOVIES_SELECT,
+  API_ROOM_SELECT,
+  API_SEAT_CREATE,
+} from "../../config/endpointapi";
 import { useEffect, useState } from "react";
 import Cookies from "cookies-js";
 import { useHistory } from "react-router-dom";
@@ -11,7 +15,7 @@ const { Option } = Select;
 
 const SeatCreate = () => {
   const [token] = useState(Cookies?.get("token"));
-  const [movieSelect, setMovieSelect] = useState([])
+  const [movieSelect, setMovieSelect] = useState([]);
   const history = useHistory();
 
   // const onChange = (e) => {
@@ -24,20 +28,20 @@ const SeatCreate = () => {
   };
 
   useEffect(() => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     const getMovieSelect = async () => {
       await axios
         .get(API_ROOM_SELECT)
         .then((res) => {
-            setMovieSelect(res?.data?.data)
+          setMovieSelect(res?.data?.data);
         })
         .catch((err) => {
-            console.log(err)
-        })
-    }
+          console.log(err);
+        });
+    };
 
-    getMovieSelect()
-  }, [token])
+    getMovieSelect();
+  }, [token]);
 
   const onFinish = (values) => {
     axios
@@ -92,7 +96,21 @@ const SeatCreate = () => {
             },
           ]}
         >
-          <Input type={"number"}/>
+          <Input type={"number"} />
+        </Form.Item>
+
+        <Form.Item
+          {...formItemLayout}
+          name="money"
+          label="Số tiền"
+          rules={[
+            {
+              required: true,
+              message: "Nhập số tiền",
+            },
+          ]}
+        >
+          <Input type={"number"} />
         </Form.Item>
 
         <Form.Item
@@ -118,18 +136,14 @@ const SeatCreate = () => {
           rules={[
             {
               required: true,
-              message: "Nhập thể loại phim"
+              message: "Nhập thể loại phim",
             },
           ]}
         >
-          <Select placeholder="Please select favourite colors">
-            {
-                movieSelect?.map(movie => {
-                    return (
-                        <Option value={movie?.id}>{movie?.name}</Option>
-                    )
-                })
-            }
+          <Select placeholder="Please select movie">
+            {movieSelect?.map((movie) => {
+              return <Option value={movie?.id}>{movie?.name}</Option>
+            })}
           </Select>
         </Form.Item>
 

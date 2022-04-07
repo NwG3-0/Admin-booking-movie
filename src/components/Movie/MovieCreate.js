@@ -38,10 +38,12 @@ const MovieCreate = () => {
       values.type_of_movie = type_of_movie.toString();
     }
     if (start_date) {
-      values.start_date = moment(start_date).format("YYYY-MM-DD");
+      values.start_date = moment(start_date).format("YYYY-MM-DD")
     }
+    values.created_at = moment().format("YYYY-MM-DD HH:mm:ss")
+    values.updated_at = moment().format("YYYY-MM-DD HH:mm:ss")
 
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
     axios
       .post(API_MOVIES_STORE, values)
       .then(function (res) {
