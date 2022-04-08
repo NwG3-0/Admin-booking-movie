@@ -112,7 +112,6 @@ const SeatCreate = () => {
         >
           <Input type={"number"} />
         </Form.Item>
-
         <Form.Item
           name="type_seat"
           label="Loại ghế"
@@ -142,7 +141,7 @@ const SeatCreate = () => {
         >
           <Select placeholder="Please select movie">
             {movieSelect?.map((movie) => {
-              return <Option value={movie?.id}>{movie?.name}</Option>
+              return <Option value={movie?.id}>{movie?.name}</Option>;
             })}
           </Select>
         </Form.Item>

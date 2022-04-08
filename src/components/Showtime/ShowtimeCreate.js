@@ -56,6 +56,9 @@ const ShowTimeCreate = () => {
       values.show_time = moment(show_time).format("HH:mm:ss");
     }
 
+    values.created_at = moment().format("YYYY-MM-DD HH:mm:ss")
+    values.updated_at = moment().format("YYYY-MM-DD HH:mm:ss")
+    
     axios
       .post(API_SHOWTIME_CREATE, values)
       .then(function (res) {
