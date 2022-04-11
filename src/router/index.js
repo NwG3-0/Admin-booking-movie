@@ -12,6 +12,8 @@ import {
   MOVIE,
   MOVIE_CREATE,
   MOVIE_UPDATE,
+  NEWS,
+  NEWS_CREATE,
   ROOM,
   ROOM_CREATE,
   SEAT,
@@ -33,6 +35,8 @@ import Seat from "../components/Seat/Seat";
 import SeatCreate from "../components/Seat/SeatCreate";
 import ShowTime from "../components/Showtime/Showtime";
 import ShowTimeCreate from "../components/Showtime/ShowtimeCreate";
+import News from "../components/News/News";
+import NewsCreate from "../components/News/NewsCreate";
 
 const AppRouter = () => {
   if (Cookies.get("token")) {
@@ -88,6 +92,20 @@ const AppRouter = () => {
           exact
           component={() =>
             !isLogin() ? <Redirect to={LOGIN} /> : <AdvertisementCreate />
+          }
+        />
+                {/*Route news :*/}
+                <Route
+          path={NEWS}
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <News />
+          }
+        />
+        <Route
+          path={NEWS_CREATE}
+          exact
+          component={() =>
+            !isLogin() ? <Redirect to={LOGIN} /> : <NewsCreate />
           }
         />
         {/*Route room :*/}

@@ -38,5 +38,10 @@ export const API_SEAT_UPDATE = `${BASE_API}/api/seat/update`
 export const API_SHOWTIME = `${BASE_API}/api/showtime`
 export const API_SHOWTIME_CREATE = `${API_SHOWTIME}/store`
 
-
+//Api news
+export const API_LIST_NEWS =`${BASE_API}/api/news`
+export const API_NEWS_STORE=`${BASE_API}/api/news/store`
+export const API_NEWS_UPDATE =`${BASE_API}/api/news/update`
+export const API_NEWS_DELETE =`${BASE_API}/api/news/delete/:id`
+export const API_NEWS_SELECT = `${API_LIST_NEWS}/select`
 
