@@ -39,94 +39,87 @@ const AppRouter = () => {
     axios.defaults.headers.common["Authorization"] =
       "Bearer" + Cookies.get("token");
   }
+
   return (
     <Router>
       <Switch>
         <Route
           path={HOME}
           exact
-          component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Home />)}
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Home />)}
         />
         <Route
           path={USER}
           exact
-          component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <User />)}
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <User />)}
         />
         <Route
           path={LOGIN}
-          component={() => (isLogin() ? <Redirect to={HOME} /> : <Login />)}
+          render={() => (isLogin() ? <Redirect to={HOME} /> : <Login />)}
         />
         {/*Route movie :*/}
         <Route
           path={MOVIE}
           exact
-          component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Movie />)}
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Movie />)}
         />
         <Route
           path={MOVIE_CREATE}
           exact
-          component={() =>
+          render={() =>
             !isLogin() ? <Redirect to={LOGIN} /> : <MovieCreate />
           }
         />
         <Route
           path={MOVIE_UPDATE}
           exact
-          component={() =>
+          render={() =>
             !isLogin() ? <Redirect to={LOGIN} /> : <MovieUpdate />
           }
         />
         {/*Route advertisement :*/}
         <Route
           path={ADVERTISEMENT}
-          component={() =>
+          render={() =>
             !isLogin() ? <Redirect to={LOGIN} /> : <Advertisement />
           }
         />
         <Route
           path={ADVERTISEMENT_CREATE}
           exact
-          component={() =>
+          render={() =>
             !isLogin() ? <Redirect to={LOGIN} /> : <AdvertisementCreate />
           }
         />
         {/*Route room :*/}
         <Route
           path={ROOM}
-          component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Room />)}
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Room />)}
         />
         <Route
           path={ROOM_CREATE}
           exact
-          component={() =>
-            !isLogin() ? <Redirect to={LOGIN} /> : <RoomCreate />
-          }
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <RoomCreate />)}
         />
         <Route
           path={SEAT}
           exact
-          component={() =>
-            !isLogin() ? <Redirect to={LOGIN} /> : <Seat />
-          }
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Seat />)}
         />
         <Route
           path={SEAT_CREATE}
           exact
-          component={() =>
-            !isLogin() ? <Redirect to={LOGIN} /> : <SeatCreate />
-          }
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <SeatCreate />)}
         />
         <Route
           path={SHOWTIME}
           exact
-          component={() =>
-            !isLogin() ? <Redirect to={LOGIN} /> : <ShowTime />
-          }
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <ShowTime />)}
         />
         <Route
           path={SHOWTIME_CREATE}
           exact
-          component={() =>
+          render={() =>
             !isLogin() ? <Redirect to={LOGIN} /> : <ShowTimeCreate />
           }
         />

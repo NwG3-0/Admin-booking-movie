@@ -49,7 +49,7 @@ const ShowTimeCreate = () => {
     const { show_date, show_time } = values;
 
     if (show_date) {
-      values.show_date = moment(show_date).format("DD:MM:YYYY");
+      values.show_date = moment(show_date).format("DD-MM-YYYY");
     }
 
     if (show_time) {

@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { ADVERTISEMENT, LOGIN, MOVIE, ROOM, SEAT, SHOWTIME, USER } from "../config/path";
 import Logo from "../asset/Logo-main.png";
 import axios from "axios";
+import Cookies from "cookies-js";
 import { API_LOGOUT } from "../config/endpointapi";
 import { useHistory } from "react-router-dom";
 
@@ -32,6 +33,8 @@ const PrivateLayout = ({ children }) => {
       .post(API_LOGOUT)
       .then((res) => {
         alert(res?.data?.message);
+        Cookies.expire("token")
+        Cookies.expire("data")
         history.push(LOGIN);
       })
       .catch((err) => {
@@ -77,7 +80,7 @@ const PrivateLayout = ({ children }) => {
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" style={{ padding: 10 }}>
-            <div style={{ float: "right", fontSize: 24 }} onClick={onLogout}>
+            <div style={{ float: "right", fontSize: 24, cursor: "pointer" }} onClick={onLogout}>
               Thoát
               <MdLogout style={{ padding: 0 }} />
             </div>
