@@ -21,6 +21,7 @@ const MovieUpdate = () => {
   const history = useHistory();
 
   const getData = async () => {
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
     await axios
       .get(bindParam(API_MOVIES_DETAIL, { id }))
       .then((res) => {

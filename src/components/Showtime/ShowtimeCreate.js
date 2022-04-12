@@ -58,7 +58,8 @@ const ShowTimeCreate = () => {
 
     values.created_at = moment().format("YYYY-MM-DD HH:mm:ss")
     values.updated_at = moment().format("YYYY-MM-DD HH:mm:ss")
-    
+
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     axios
       .post(API_SHOWTIME_CREATE, values)
       .then(function (res) {

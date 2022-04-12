@@ -7,6 +7,7 @@ import { API_LIST_ROOM, API_ROOM_DELETE } from "../../config/endpointapi";
 import { bindParam } from "../../config/function";
 import { ROOM_CREATE } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
+import Cookies from "cookies-js";
 import "../../style/Room.css"
 
 const Room = () => {
