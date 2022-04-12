@@ -6,12 +6,14 @@ import { API_MOVIES, API_MOVIES_DELETE } from "../../config/endpointapi";
 import { MOVIE_CREATE, MOVIE_UPDATE } from "../../config/path";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Cookies from "cookies-js";
 import { bindParam } from "../../config/function";
 import "../../style/Movie.css";
 
 const Movie = () => {
   const value = useRef();
   const [status, setStatus] = useState(false);
+  const [token] = useState(Cookies?.get("token"));
   const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState();
   const [keyword, setKeyword] = useState("");
@@ -21,6 +23,7 @@ const Movie = () => {
 
   useEffect(() => {
     const getmovies = async () => {
+      axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
       const params = { limit, page, keyword };
       await axios
         .get(API_MOVIES, { params })

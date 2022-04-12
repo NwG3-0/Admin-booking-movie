@@ -6,10 +6,14 @@ import { API_LOGIN } from "../../config/endpointapi";
 import Cookies from "cookies-js";
 import "../auth/Login.css";
 import  Logo from "../../asset/Logo-main.png";
+import { useState } from "react";
 
 const Login = () => {
   const history = useHistory();
+  const [token] = useState(Cookies?.get("token"));
+
   const onFinish = (values) => {
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
     axios
       .post(API_LOGIN, values)
       .then(function (res) {

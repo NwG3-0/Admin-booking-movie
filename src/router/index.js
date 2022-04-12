@@ -39,12 +39,14 @@ import ShowTimeCreate from "../components/Showtime/ShowtimeCreate";
 import News from "../components/News/News";
 import NewsCreate from "../components/News/NewsCreate";
 import NewsUpdate from "../components/News/NewsUpdate";
+import { useEffect } from "react";
 
 const AppRouter = () => {
-  if (Cookies.get("token")) {
+  useEffect(() => {
     axios.defaults.headers.common["Authorization"] =
       "Bearer" + Cookies.get("token");
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Router>
