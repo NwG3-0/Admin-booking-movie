@@ -69,7 +69,6 @@ const Advertisement = () => {
       render: (value, record) => {
         return (
           <>
-            <Button>Sửa</Button>
             <Button onClick={()=>onDelete(value?.id)}>Xóa</Button>
           </>
         );

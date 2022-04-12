@@ -22,7 +22,9 @@ export const SEAT_CREATE = '/seat_create'
 // path showtime
 export const SHOWTIME = '/showtime'
 export const SHOWTIME_CREATE = '/showtime_create'
+export const SHOWTIME_UPDATE = '/showtime_update/:id'
 
 //path news
 export const NEWS ='/news'
 export const NEWS_CREATE = '/news_create'
+export const NEWS_UPDATE = '/news_update/:id'

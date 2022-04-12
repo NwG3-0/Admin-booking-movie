@@ -3,11 +3,15 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { API_LIST_NEWS, API_NEWS_DELETE, API_News_DELETE, API_NEWS_UPDATE } from "../../config/endpointapi";
+import {
+  API_LIST_NEWS,
+  API_NEWS_DELETE,
+  API_NEWS_UPDATE,
+} from "../../config/endpointapi";
 import { bindParam } from "../../config/function";
-import { NEWS_CREATE } from "../../config/path";
+import { NEWS_CREATE, NEWS_UPDATE } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
-import "../../style/News.css"
+import "../../style/News.css";
 
 const News = () => {
   const value = useRef();
@@ -38,19 +42,18 @@ const News = () => {
   };
 
   const onDelete = async (id) => {
-    await axios.post(bindParam(API_NEWS_DELETE, { id }))
-      .then(res => {
-        console.log(value?.id);
-        setStatus(!status)
-      })
-  }
+    await axios.post(bindParam(API_NEWS_DELETE, { id })).then((res) => {
+      console.log(value?.id);
+      setStatus(!status);
+    });
+  };
   const onChangePage = (page, limit) => {
     setPage(page);
     setLimit(limit);
   };
 
   const onSwitchUpdate = (id) => {
-    history.push(bindParam(API_NEWS_UPDATE, { id }));
+    history.push(bindParam(NEWS_UPDATE,{ id }));
   };
 
   const columns = [
@@ -60,7 +63,7 @@ const News = () => {
       render: (value, record) => {
         return (
           <div className="news-list__img">
-            <img src={value.news} />
+            <img src={value.image} />
           </div>
         );
       },

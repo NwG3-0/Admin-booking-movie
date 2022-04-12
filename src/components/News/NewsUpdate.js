@@ -1,35 +1,65 @@
-import { Button, Form, Input } from "antd";
-import axios from "axios";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { API_NEWS_STORE } from "../../config/endpointapi";
-import { NEWS } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
+import { Form, Select, InputNumber, Button, Input, DatePicker } from "antd";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Cookies from "cookies-js";
+import moment from "moment";
+import { useHistory } from "react-router-dom";
+import { MOVIE, NEWS } from "../../config/path";
+import { useParams } from "react-router-dom";
+import { bindParam } from "../../config/function";
+import { API_NEWS_DETAIL, API_NEWS_UPDATE } from "../../config/endpointapi";
 
-const NewsCreate = () => {
+const { Option } = Select;
+
+const NewsUpdate = () => {
+  const { id } = useParams();
+  const [data, setData] = useState({});
   const [token] = useState(Cookies?.get("token"));
+  const [form] = Form.useForm();
+  const [defaultValue, setDefaultValue] = useState({});
   const history = useHistory();
 
-  const onChange = (e) => {
-    console.log(e.target.value);
+  const getData = async () => {
+    await axios
+      .get(bindParam(API_NEWS_DETAIL, { id }))
+      .then((res) => {
+        setData(res?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  useEffect(() => {
+    if (data) {
+      form.setFieldsValue({
+        name: data?.name,
+        image: data?.image,
+        detail: data?.detail,
+        description: data?.description,
+      });
+    }
+  }, [data, form]);
+
+  useEffect(() => {
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    getData();
+  }, [token]);
+
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
 
-  const normFile = (e) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
   const onFinish = (values) => {
+    if (id) {
+      values.id = Number(id);
+    }
+
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     axios
-      .post(API_NEWS_STORE, values)
+      .post(API_NEWS_UPDATE, values)
       .then(function (res) {
         history.push(NEWS);
       })
@@ -37,11 +67,19 @@ const NewsCreate = () => {
         console.log(err);
       });
   };
+
+  console.log(data);
   return (
     <PrivateLayout>
-      <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
+      <Form
+        name="validate_other"
+        initialValues={data}
+        {...formItemLayout}
+        form={form}
+        onFinish={onFinish}
+      >
         <h2 style={{ fontSize: "2rem", textTransform: "uppercase" }}>
-          Thêm tin tức
+          Sửa tin tức
         </h2>
         <Form.Item
           {...formItemLayout}
@@ -93,7 +131,7 @@ const NewsCreate = () => {
             },
           ]}
         >
-          <Input.TextArea rows={5} showCount maxLength={5000} />
+          <Input />
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -105,4 +143,4 @@ const NewsCreate = () => {
     </PrivateLayout>
   );
 };
-export default NewsCreate;
+export default NewsUpdate;

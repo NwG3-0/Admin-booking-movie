@@ -54,22 +54,11 @@ const MovieUpdate = () => {
     getData();
   }, [token]);
 
-  //   const onChange = (e) => {
-  //     console.log(e.target.value);
-  //   };
-
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
 
-  //   const normFile = (e) => {
-  //     console.log("Upload event:", e);
-  //     if (Array.isArray(e)) {
-  //       return e;
-  //     }
-  //     return e && e.fileList;
-  //   };
 
   const onFinish = (values) => {
     const { type_of_movie, start_date } = values;
