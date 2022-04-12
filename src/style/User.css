@@ -26,7 +26,7 @@
     background-color: rgb(144, 144, 253);
     color: white;
     cursor: pointer;
-    margin: auto;
+    margin: auto;   
 }
 
 .ant-col-4 {
@@ -35,4 +35,5 @@
 
 a {
     color: white;
+    
 }

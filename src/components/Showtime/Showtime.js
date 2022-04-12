@@ -3,11 +3,13 @@ import { Button, Col, Input, Row, Table } from "antd";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { API_SEAT, API_SEAT_DELETE, API_SHOWTIME } from "../../config/endpointapi";
+import {
+  API_LIST_SHOWTIME,
+  API_SHOWTIME_DELETE,
+} from "../../config/endpointapi";
 import { bindParam } from "../../config/function";
-import { SEAT_CREATE, SHOWTIME_CREATE } from "../../config/path";
-import moment from "moment";
-import "../../style/Movie.css";
+import { SHOWTIME_CREATE } from "../../config/path";
+import "../../style/Showtime.css";
 
 const ShowTime = () => {
   const value = useRef();
@@ -27,7 +29,7 @@ const ShowTime = () => {
     const getShowtime = async () => {
       const params = { limit, page, keyword };
       await axios
-        .get(API_SHOWTIME, { params })
+        .get(API_LIST_SHOWTIME, { params })
         .then((res) => {
           setData(res?.data?.data?.data);
           setTotal(res?.data?.data?.total);
@@ -40,9 +42,9 @@ const ShowTime = () => {
   }, [status, limit, page, keyword]);
 
   const onDelete = async (id) => {
-    // await axios.post(bindParam(API_SEAT_DELETE, { id })).then((res) => {
-    //   setStatus(!status);
-    // });
+    await axios.post(bindParam(API_SHOWTIME_DELETE, { id })).then((res) => {
+      setStatus(!status);
+    });
   };
 
   const onChangePage = (page, limit) => {
@@ -51,16 +53,16 @@ const ShowTime = () => {
   };
 
   const columns = [
-    { 
-      title: "ID Suất chiếu", 
-      dataIndex: "id" 
+    {
+      title: "ID Suất chiếu",
+      dataIndex: "id",
     },
-    { 
-      title: "Ngày chiếu", 
-      dataIndex: "show_date"
+    {
+      title: "Ngày chiếu",
+      dataIndex: "show_date",
     },
-    { 
-      title: "Giờ chiếu", 
+    {
+      title: "Giờ chiếu",
       dataIndex: "show_time",
     },
     { title: "Phòng chiếu", dataIndex: ["room", "name"] },
@@ -79,21 +81,22 @@ const ShowTime = () => {
     },
   ];
 
-  return <PrivateLayout>
+  return (
+    <PrivateLayout>
       <h2 style={{ fontSize: "32px", textTransform: "uppercase" }}>
-        Danh sách phim
+        Danh sách suất chiếu
       </h2>
       <Row>
         <Col span={22}>
-          <div className="movies-search">
+          <div className="showtime-search">
             <Input ref={value} placeholder="Search by First name" />
-            <div className="movies-search__btn" onClick={onSearch}>
+            <div className="showtime-search__btn" onClick={onSearch}>
               Tìm
             </div>
           </div>
         </Col>
         <Col span={2}>
-          <div className="movies-add__btn" onClick={onSearch}>
+          <div className="showtime-add__btn" onClick={onSearch}>
             <Link to={SHOWTIME_CREATE}>Thêm suất chiếu</Link>
           </div>
         </Col>
@@ -101,7 +104,7 @@ const ShowTime = () => {
 
       <Table
         columns={columns}
-        className="movie-table"
+        className="showtime-table"
         pagination={{
           total: total,
           onChange: onChangePage,
@@ -110,7 +113,8 @@ const ShowTime = () => {
         }}
         dataSource={data}
       />
-  </PrivateLayout>;
+    </PrivateLayout>
+  );
 };
 
 export default ShowTime;

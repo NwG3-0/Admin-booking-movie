@@ -4,7 +4,7 @@
 .ant-table-thead > tr > th {
     text-align:center;
 }
-.room-search{
+.news-search{
     display: flex;
     justify-content: center;
     width: 60%;
@@ -12,13 +12,13 @@
     padding:10px;
 }
 
-.room-search__btn{
+.news-search__btn{
     padding: 10px 20px;
     background-color: rgb(144, 144, 253);
     color: white;
     cursor: pointer;
 }
-.room-add__btn{
+.news-add__btn{
     padding: 10px 20px;
     background-color: rgb(144, 144, 253);
     color: white;
@@ -33,7 +33,7 @@
 a{
     color:white;
 }
-.room-list__img img{
+.news-list__img img{
     width: 400px;
     height: 200px;
     object-fit: contain;

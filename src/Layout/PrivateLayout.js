@@ -10,9 +10,10 @@ import { MdLogout } from "react-icons/md";
 import { BiMovie } from "react-icons/bi";
 import { BsFillDoorOpenFill } from "react-icons/bs";
 import { BsFillCalendarWeekFill } from "react-icons/bs";
+import { BsNewspaper } from "react-icons/bs";
 import { FaChair } from "react-icons/fa"
 import { Link } from "react-router-dom";
-import { ADVERTISEMENT, LOGIN, MOVIE, ROOM, SEAT, SHOWTIME, USER } from "../config/path";
+import { ADVERTISEMENT, LOGIN, MOVIE, NEWS, ROOM, SEAT, SHOWTIME, USER } from "../config/path";
 import Logo from "../asset/Logo-main.png";
 import axios from "axios";
 import Cookies from "cookies-js";
@@ -53,27 +54,27 @@ const PrivateLayout = ({ children }) => {
             <Menu.Item key="1" icon={<AiOutlineHome />}>
               Trang chủ
             </Menu.Item>
-            <Menu.Item key="2" icon={<IoMdStarHalf />}>
-              Đánh giá
-            </Menu.Item>
-            <Menu.Item key="3" icon={<BiMovie />}>
+            <Menu.Item key="2" icon={<BiMovie />}>
               <Link to={MOVIE}>Phim</Link>{" "}
             </Menu.Item>
-            <Menu.Item key="4" icon={<IoMdStarHalf />}>
+            <Menu.Item key="3" icon={<IoMdStarHalf />}>
               <Link to={ADVERTISEMENT}>
               Quảng cáo
               </Link>
             </Menu.Item>
-            <Menu.Item key="5" icon={<UserOutlined />}>
+            <Menu.Item key="4" icon={<UserOutlined />}>
               <Link to={USER}>Người dùng</Link>
             </Menu.Item>
-            <Menu.Item key="6" icon={<BsFillDoorOpenFill />}>
+            <Menu.Item key="5" icon={<BsFillDoorOpenFill />}>
               <Link to={ROOM}>Phòng chiếu</Link>
             </Menu.Item>
-            <Menu.Item key="7" icon={<FaChair />}>
+            <Menu.Item key="6" icon={<FaChair />}>
               <Link to={SEAT}>Ghế ngồi</Link>
             </Menu.Item>
-            <Menu.Item key="7" icon={<BsFillCalendarWeekFill />}>
+            <Menu.Item key="7" icon={<BsNewspaper />}>
+              <Link to={NEWS}>Tin tức</Link>
+            </Menu.Item>
+            <Menu.Item key="8" icon={<BsFillCalendarWeekFill />}>
               <Link to={SHOWTIME}>Suất chiếu</Link>
             </Menu.Item>
           </Menu>
@@ -97,7 +98,7 @@ const PrivateLayout = ({ children }) => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2018 Created by Ant UED
+            LongDT Cinema Created by Đặng Tuấn Long
           </Footer>
         </Layout>
       </Layout>

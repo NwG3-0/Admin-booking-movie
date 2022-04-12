@@ -123,11 +123,11 @@ const ShowTimeCreate = () => {
 
         <Form.Item
           name="room_id"
-          label="Thể loại"
+          label="Phòng"
           rules={[
             {
               required: true,
-              message: "Nhập thể loại phim",
+              message: "Nhập phòng",
             },
           ]}
         >
@@ -140,7 +140,7 @@ const ShowTimeCreate = () => {
 
         <Form.Item
           name="movie_id"
-          label="Thể loại"
+          label="Phim"
           rules={[
             {
               required: true,
