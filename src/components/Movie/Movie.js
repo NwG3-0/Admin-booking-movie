@@ -9,11 +9,11 @@ import { useHistory } from "react-router-dom";
 import Cookies from "cookies-js";
 import { bindParam } from "../../config/function";
 import "../../style/Movie.css";
+import { getToken } from "../../Http";
 
 const Movie = () => {
   const value = useRef();
   const [status, setStatus] = useState(false);
-  const [token] = useState(Cookies?.get("token"));
   const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState();
   const [keyword, setKeyword] = useState("");
@@ -23,7 +23,7 @@ const Movie = () => {
 
   useEffect(() => {
     const getmovies = async () => {
-      axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
+      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
       const params = { limit, page, keyword };
       await axios
         .get(API_MOVIES, { params })
@@ -43,6 +43,7 @@ const Movie = () => {
   };
 
   const onDelete = async (id) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     await axios.post(`${API_MOVIES_DELETE}/${id}`).then((res) => {
       setStatus(!status);
     });

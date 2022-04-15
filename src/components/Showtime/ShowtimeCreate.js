@@ -1,5 +1,13 @@
 import PrivateLayout from "../../Layout/PrivateLayout";
-import { Form, Select, InputNumber, Button, Input, DatePicker, TimePicker } from "antd";
+import {
+  Form,
+  Select,
+  InputNumber,
+  Button,
+  Input,
+  DatePicker,
+  TimePicker,
+} from "antd";
 import axios from "axios";
 import {
   API_MOVIES_SELECT,
@@ -49,15 +57,15 @@ const ShowTimeCreate = () => {
     const { show_date, show_time } = values;
 
     if (show_date) {
-      values.show_date = moment(show_date).format("DD-MM-YYYY");
+      values.show_date = moment(show_date).format("YYYY-MM-DD");
     }
 
     if (show_time) {
       values.show_time = moment(show_time).format("HH:mm:ss");
     }
 
-    values.created_at = moment().format("YYYY-MM-DD HH:mm:ss")
-    values.updated_at = moment().format("YYYY-MM-DD HH:mm:ss")
+    values.created_at = moment().format("YYYY-MM-DD HH:mm:ss");
+    values.updated_at = moment().format("YYYY-MM-DD HH:mm:ss");
 
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     axios
@@ -71,7 +79,6 @@ const ShowTimeCreate = () => {
   };
 
   useEffect(() => {
-    
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     const getMovieSelect = async () => {
       await axios

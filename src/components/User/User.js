@@ -4,6 +4,7 @@ import { Input, Table } from "antd";
 import PrivateLayout from "../../Layout/PrivateLayout";
 import { API_LIST_USER } from "../../config/endpointapi";
 import "../../style/User.css";
+import { getToken } from "../../Http";
 
 const User = () => {
   const [limit, setLimit] = useState(10);
@@ -16,6 +17,7 @@ const User = () => {
   useEffect(() => {
     const getUser = async () => {
       const params = { limit, page, keyword };
+      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       await axios
         .get(API_LIST_USER, { params })
         .then((res) => {

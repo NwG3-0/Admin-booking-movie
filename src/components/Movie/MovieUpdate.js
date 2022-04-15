@@ -9,19 +9,19 @@ import { useHistory } from "react-router-dom";
 import { MOVIE } from "../../config/path";
 import { useParams } from "react-router-dom";
 import { bindParam } from "../../config/function";
+import { getToken } from "../../Http";
 
 const { Option } = Select;
 
 const MovieUpdate = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [token] = useState(Cookies?.get("token"));
   const [form] = Form.useForm();
   const [defaultValue, setDefaultValue] = useState({});
   const history = useHistory();
 
   const getData = async () => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     await axios
       .get(bindParam(API_MOVIES_DETAIL, { id }))
       .then((res) => {
@@ -51,15 +51,14 @@ const MovieUpdate = () => {
   }, [data, form]);
 
   useEffect(() => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     getData();
-  }, [token]);
+  }, []);
 
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
-
 
   const onFinish = (values) => {
     const { type_of_movie, start_date } = values;
@@ -74,7 +73,7 @@ const MovieUpdate = () => {
       values.start_date = moment(start_date).format("YYYY-MM-DD");
     }
 
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     axios
       .post(API_MOVIES_UPDATE, values)
       .then(function (res) {

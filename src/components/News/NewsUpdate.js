@@ -9,18 +9,19 @@ import { MOVIE, NEWS } from "../../config/path";
 import { useParams } from "react-router-dom";
 import { bindParam } from "../../config/function";
 import { API_NEWS_DETAIL, API_NEWS_UPDATE } from "../../config/endpointapi";
+import { getToken } from "../../Http";
 
 const { Option } = Select;
 
 const NewsUpdate = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [token] = useState(Cookies?.get("token"));
   const [form] = Form.useForm();
   const [defaultValue, setDefaultValue] = useState({});
   const history = useHistory();
 
   const getData = async () => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     await axios
       .get(bindParam(API_NEWS_DETAIL, { id }))
       .then((res) => {
@@ -43,9 +44,9 @@ const NewsUpdate = () => {
   }, [data, form]);
 
   useEffect(() => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     getData();
-  }, [token]);
+  }, []);
 
   const formItemLayout = {
     labelCol: { span: 6 },
@@ -57,7 +58,7 @@ const NewsUpdate = () => {
       values.id = Number(id);
     }
 
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     axios
       .post(API_NEWS_UPDATE, values)
       .then(function (res) {

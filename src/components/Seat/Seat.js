@@ -8,6 +8,7 @@ import { SEAT_CREATE } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
 import Cookies from "cookies-js";
 import "../../style/Movie.css";
+import { getToken } from "../../Http";
 
 const Seat = () => {
   const value = useRef();
@@ -26,7 +27,7 @@ const Seat = () => {
 
   useEffect(() => {
     const getseats = async () => {
-      axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
       const params = { limit, page, keyword };
       await axios
         .get(API_SEAT, { params })
@@ -42,6 +43,7 @@ const Seat = () => {
   }, [status, limit, page, keyword]);
 
   const onDelete = async (id) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     await axios.post(bindParam(API_SEAT_DELETE, { id })).then((res) => {
       setStatus(!status);
     });
