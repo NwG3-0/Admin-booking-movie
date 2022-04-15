@@ -7,7 +7,9 @@ import { API_LIST_ROOM, API_ROOM_DELETE } from "../../config/endpointapi";
 import { bindParam } from "../../config/function";
 import { ROOM_CREATE } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
-import "../../style/Room.css"
+import Cookies from "cookies-js";
+import "../../style/Room.css";
+import { getToken } from "../../Http";
 
 const Room = () => {
   const value = useRef();
@@ -21,6 +23,7 @@ const Room = () => {
   useEffect(() => {
     const getmovies = async () => {
       const params = { limit, page, keyword };
+      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
       await axios
         .get(API_LIST_ROOM, { params })
         .then((res) => {
@@ -38,20 +41,20 @@ const Room = () => {
   };
 
   const onDelete = async (id) => {
-    await axios.post(bindParam(API_ROOM_DELETE, { id }))
-      .then(res => {
-        console.log(value?.id);
-        setStatus(!status)
-      })
-  }
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
+    await axios.post(bindParam(API_ROOM_DELETE, { id })).then((res) => {
+      console.log(value?.id);
+      setStatus(!status);
+    });
+  };
   const onChangePage = (page, limit) => {
     setPage(page);
     setLimit(limit);
   };
 
-//   const onSwitchUpdate = (id) => {
-//     history.push(bindParam(MOVIE_UPDATE, { id }));
-//   };
+  //   const onSwitchUpdate = (id) => {
+  //     history.push(bindParam(MOVIE_UPDATE, { id }));
+  //   };
 
   const columns = [
     { title: "ID Phòng", dataIndex: "id" },

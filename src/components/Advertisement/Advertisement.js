@@ -2,16 +2,18 @@ import { Button, Col, Input, Row, Table } from "antd";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { API_ADVERTISEMENT_DELETE, API_LIST_ADVERTISEMENT } from "../../config/endpointapi";
+import {
+  API_ADVERTISEMENT_DELETE,
+  API_LIST_ADVERTISEMENT,
+} from "../../config/endpointapi";
 import { ADVERTISEMENT_CREATE } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
 import "../../style/Advertisement.css";
 import { bindParam } from "../../config/function";
 
-
 const Advertisement = () => {
   const value = useRef();
-  const [status, setStatus] = useState(false)
+  const [status, setStatus] = useState(false);
   const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState();
   const [keyword, setKeyword] = useState("");
@@ -31,7 +33,7 @@ const Advertisement = () => {
         });
     };
     getadvertisement();
-  }, [status,limit, page, keyword]);
+  }, [status, limit, page, keyword]);
   const onSearch = () => {
     setKeyword(value.current.input.value);
   };
@@ -41,19 +43,20 @@ const Advertisement = () => {
     setLimit(limit);
   };
   const onDelete = async (id) => {
-    await axios.post(bindParam(API_ADVERTISEMENT_DELETE, { id }))
-      .then(res => {
+    await axios
+      .post(bindParam(API_ADVERTISEMENT_DELETE, { id }))
+      .then((res) => {
         console.log(value?.id);
-        setStatus(!status)
-      })
-  }
+        setStatus(!status);
+      });
+  };
   const columns = [
     { title: "ID Quảng cáo", dataIndex: "id" },
     {
       title: "Ảnh",
       render: (value, record) => {
         return (
-          <div className="advertisement-list__img">      
+          <div className="advertisement-list__img">
             <img src={value.image} />
           </div>
         );
@@ -69,7 +72,7 @@ const Advertisement = () => {
       render: (value, record) => {
         return (
           <>
-            <Button onClick={()=>onDelete(value?.id)}>Xóa</Button>
+            <Button onClick={() => onDelete(value?.id)}>Xóa</Button>
           </>
         );
       },

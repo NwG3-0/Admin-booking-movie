@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Cookies from "cookies-js";
 import { useHistory } from "react-router-dom";
 import { SEAT } from "../../config/path";
+import { getToken } from "../../Http";
 
 const { Option } = Select;
 
@@ -28,7 +29,7 @@ const SeatCreate = () => {
   };
 
   useEffect(() => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     const getMovieSelect = async () => {
       await axios
         .get(API_ROOM_SELECT)
@@ -44,6 +45,7 @@ const SeatCreate = () => {
   }, [token]);
 
   const onFinish = (values) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     axios
       .post(API_SEAT_CREATE, values)
       .then(function (res) {

@@ -6,8 +6,10 @@ import { API_MOVIES, API_MOVIES_DELETE } from "../../config/endpointapi";
 import { MOVIE_CREATE, MOVIE_UPDATE } from "../../config/path";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Cookies from "cookies-js";
 import { bindParam } from "../../config/function";
 import "../../style/Movie.css";
+import { getToken } from "../../Http";
 
 const Movie = () => {
   const value = useRef();
@@ -21,6 +23,7 @@ const Movie = () => {
 
   useEffect(() => {
     const getmovies = async () => {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
       const params = { limit, page, keyword };
       await axios
         .get(API_MOVIES, { params })
@@ -40,6 +43,7 @@ const Movie = () => {
   };
 
   const onDelete = async (id) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     await axios.post(`${API_MOVIES_DELETE}/${id}`).then((res) => {
       setStatus(!status);
     });

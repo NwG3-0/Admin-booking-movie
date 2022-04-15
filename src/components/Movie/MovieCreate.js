@@ -7,11 +7,11 @@ import Cookies from "cookies-js";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { MOVIE } from "../../config/path";
+import { getToken } from "../../Http";
 
 const { Option } = Select;
 
 const MovieCreate = () => {
-  const [token] = useState(Cookies?.get("token"));
   const history = useHistory();
 
   // const onChange = (e) => {
@@ -38,12 +38,12 @@ const MovieCreate = () => {
       values.type_of_movie = type_of_movie.toString();
     }
     if (start_date) {
-      values.start_date = moment(start_date).format("YYYY-MM-DD")
+      values.start_date = moment(start_date).format("YYYY-MM-DD");
     }
-    values.created_at = moment().format("YYYY-MM-DD HH:mm:ss")
-    values.updated_at = moment().format("YYYY-MM-DD HH:mm:ss")
+    values.created_at = moment().format("YYYY-MM-DD HH:mm:ss");
+    values.updated_at = moment().format("YYYY-MM-DD HH:mm:ss");
 
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     axios
       .post(API_MOVIES_STORE, values)
       .then(function (res) {

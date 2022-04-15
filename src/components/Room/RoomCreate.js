@@ -6,9 +6,9 @@ import { API_ROOM_STORE } from "../../config/endpointapi";
 import { ROOM } from "../../config/path";
 import PrivateLayout from "../../Layout/PrivateLayout";
 import Cookies from "cookies-js";
+import { getToken } from "../../Http";
 
 const RoomCreate = () => {
-  const [token] = useState(Cookies?.get("token"));
   const history = useHistory();
 
   const onChange = (e) => {
@@ -27,7 +27,7 @@ const RoomCreate = () => {
     return e && e.fileList;
   };
   const onFinish = (values) => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     axios
       .post(API_ROOM_STORE, values)
       .then(function (res) {

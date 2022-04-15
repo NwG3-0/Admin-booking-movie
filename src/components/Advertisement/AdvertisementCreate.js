@@ -6,41 +6,40 @@ import axios from "axios";
 import { API_ADVERTISEMENT_STORE } from "../../config/endpointapi";
 import { ADVERTISEMENT } from "../../config/path";
 import { useHistory } from "react-router-dom";
-
+import { getToken } from "../../Http";
 
 const AdvertisementCreate = () => {
-    const [token] = useState(Cookies?.get("token"));
-    const history = useHistory();
+  const history = useHistory();
 
-    const onChange = (e) => {
-      console.log(e.target.value);
-    };
-    const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
-    };
-  
-    const normFile = (e) => {
-      console.log("Upload event:", e);
-      if (Array.isArray(e)) {
-        return e;
-      }
-      return e && e.fileList;
-    };
-    const onFinish = (values) => {
-      axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-      axios
-        .post(API_ADVERTISEMENT_STORE, values)
-        .then(function (res) {
-          history.push(ADVERTISEMENT);
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    };
-  return(
-      <PrivateLayout>
-               <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
+  const onChange = (e) => {
+    console.log(e.target.value);
+  };
+  const formItemLayout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 14 },
+  };
+
+  const normFile = (e) => {
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+  const onFinish = (values) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
+    axios
+      .post(API_ADVERTISEMENT_STORE, values)
+      .then(function (res) {
+        history.push(ADVERTISEMENT);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+  return (
+    <PrivateLayout>
+      <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
         <h2 style={{ fontSize: "2rem", textTransform: "uppercase" }}>
           Thêm quảng cáo
         </h2>
@@ -71,7 +70,6 @@ const AdvertisementCreate = () => {
         >
           <Input />
         </Form.Item>
-       
 
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
           <Button type="primary" htmlType="submit">
@@ -79,8 +77,7 @@ const AdvertisementCreate = () => {
           </Button>
         </Form.Item>
       </Form>
-      </PrivateLayout>
-
+    </PrivateLayout>
   );
 };
 export default AdvertisementCreate;

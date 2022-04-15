@@ -36,7 +36,7 @@ export const API_SEAT_UPDATE = `${BASE_API}/api/seat/update`
 
 //Api showtime
 export const API_LIST_SHOWTIME = `${BASE_API}/api/showtime`
-export const API_SHOWTIME_CREATE = `${BASE_API}/showime/store`
+export const API_SHOWTIME_CREATE = `${BASE_API}/api/showtime/store`
 export const API_SHOWTIME_UPDATE =`${BASE_API}/api/showtime/update`
 export const API_SHOWTIME_DELETE =`${BASE_API}/api/showtime/delete/:id`
 export const API_SHOWTIME_DETAIL = `${BASE_API}/api/showtime/:id`

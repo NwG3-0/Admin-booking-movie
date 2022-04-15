@@ -53,7 +53,7 @@ const News = () => {
   };
 
   const onSwitchUpdate = (id) => {
-    history.push(bindParam(NEWS_UPDATE,{ id }));
+    history.push(bindParam(NEWS_UPDATE, { id }));
   };
 
   const columns = [
