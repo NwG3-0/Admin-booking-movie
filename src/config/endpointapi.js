@@ -51,4 +51,5 @@ export const API_NEWS_DELETE =`${BASE_API}/api/news/delete/:id`
 export const API_NEWS_SELECT = `${API_LIST_NEWS}/select`
 export const API_NEWS_DETAIL = `${BASE_API}/api/news/:id`
 
-
+//Api tickets
+export const API_LIST_TICKET =`${BASE_API}/api/tickets`

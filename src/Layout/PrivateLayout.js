@@ -13,7 +13,7 @@ import { BsFillCalendarWeekFill } from "react-icons/bs";
 import { BsNewspaper } from "react-icons/bs";
 import { FaChair } from "react-icons/fa"
 import { Link } from "react-router-dom";
-import { ADVERTISEMENT, LOGIN, MOVIE, NEWS, ROOM, SEAT, SHOWTIME, USER } from "../config/path";
+import { ADVERTISEMENT, LOGIN, MOVIE, NEWS, ROOM, SEAT, SHOWTIME, TICKET, USER } from "../config/path";
 import Logo from "../asset/Logo-main.png";
 import axios from "axios";
 import Cookies from "cookies-js";
@@ -76,6 +76,9 @@ const PrivateLayout = ({ children }) => {
             </Menu.Item>
             <Menu.Item key="8" icon={<BsFillCalendarWeekFill />}>
               <Link to={SHOWTIME}>Suất chiếu</Link>
+            </Menu.Item>
+            <Menu.Item key="9" icon={<BsFillCalendarWeekFill />}>
+              <Link to={TICKET}>Vé</Link>
             </Menu.Item>
           </Menu>
         </Sider>

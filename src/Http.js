@@ -7,5 +7,5 @@ axios.defaults.headers.common['Cache-Control'] = 'max-age=0'
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 
 export const getToken = () => {
-    return Cookies.get('token_user') ? Cookies.get('token_user') : ''
+    return Cookies.get('token') ? Cookies.get('token') : ''
 }

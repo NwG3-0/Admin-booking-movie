@@ -206,7 +206,7 @@ const MovieUpdate = () => {
           label="Mô tả"
           rules={[{ required: true, message: "Nhập mô tả" }]}
         >
-          <Input.TextArea rows={5} showCount maxLength={100} />
+          <Input.TextArea rows={5} showCount maxLength={1000} />
         </Form.Item>
         <Form.Item
           {...formItemLayout}

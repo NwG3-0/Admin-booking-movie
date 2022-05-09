@@ -21,6 +21,7 @@ import {
   SEAT_CREATE,
   SHOWTIME,
   SHOWTIME_CREATE,
+  TICKET,
   USER,
 } from "../config/path";
 import Cookies from "cookies-js";
@@ -40,13 +41,14 @@ import News from "../components/News/News";
 import NewsCreate from "../components/News/NewsCreate";
 import NewsUpdate from "../components/News/NewsUpdate";
 import { useEffect } from "react";
+import Ticket from "../components/Ticket/Ticket";
 
 const AppRouter = () => {
   useEffect(() => {
     axios.defaults.headers.common["Authorization"] =
       "Bearer" + Cookies.get("token");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Router>
@@ -60,6 +62,11 @@ const AppRouter = () => {
           path={USER}
           exact
           render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <User />)}
+        />
+        <Route
+          path={TICKET}
+          exact
+          render={() => (!isLogin() ? <Redirect to={LOGIN} /> : <Ticket />)}
         />
         <Route
           path={LOGIN}
@@ -99,12 +106,10 @@ const AppRouter = () => {
             !isLogin() ? <Redirect to={LOGIN} /> : <AdvertisementCreate />
           }
         />
-                {/*Route news :*/}
-                <Route
+        {/*Route news :*/}
+        <Route
           path={NEWS}
-          component={() =>
-            !isLogin() ? <Redirect to={LOGIN} /> : <News />
-          }
+          component={() => (!isLogin() ? <Redirect to={LOGIN} /> : <News />)}
         />
         <Route
           path={NEWS_CREATE}
@@ -113,7 +118,7 @@ const AppRouter = () => {
             !isLogin() ? <Redirect to={LOGIN} /> : <NewsCreate />
           }
         />
-                <Route
+        <Route
           path={NEWS_UPDATE}
           exact
           component={() =>
@@ -152,6 +157,7 @@ const AppRouter = () => {
             !isLogin() ? <Redirect to={LOGIN} /> : <ShowTimeCreate />
           }
         />
+
       </Switch>
     </Router>
   );

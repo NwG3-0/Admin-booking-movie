@@ -28,3 +28,6 @@ export const SHOWTIME_UPDATE = '/showtime_update/:id'
 export const NEWS ='/news'
 export const NEWS_CREATE = '/news_create'
 export const NEWS_UPDATE = '/news_update/:id'
+
+//path ticket
+export const TICKET ='/ticket'

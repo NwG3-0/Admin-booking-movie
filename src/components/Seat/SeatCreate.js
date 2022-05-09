@@ -126,18 +126,17 @@ const SeatCreate = () => {
         >
           <Select placeholder="Vui lòng chọn loại ghế">
             <Option value="1">Ghế vip</Option>
-            <Option value="2">Ghế cặp đôi</Option>
             <Option value="3">Ghế thường</Option>
           </Select>
         </Form.Item>
 
         <Form.Item
           name="room_id"
-          label="Thể loại"
+          label="Phòng chiếu"
           rules={[
             {
               required: true,
-              message: "Nhập thể loại phim",
+              message: "Nhập phòng chiếu",
             },
           ]}
         >

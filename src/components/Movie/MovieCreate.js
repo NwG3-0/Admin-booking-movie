@@ -129,6 +129,9 @@ const MovieCreate = () => {
             <Option value="Hài hước">Hài hước</Option>
             <Option value="Hoạt hình">Hoạt hình</Option>
             <Option value="Trinh thám">Trinh thám</Option>
+            <Option value="Phiêu lưu">Phiêu lưu</Option>
+            <Option value="Thần thoại">Thần thoại</Option>
+
           </Select>
         </Form.Item>
 
