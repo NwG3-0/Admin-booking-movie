@@ -6,7 +6,6 @@ import { API_LOGIN } from "../../config/endpointapi";
 import Cookies from "cookies-js";
 import "../auth/Login.css";
 import Logo from "../../asset/Logo-main.png";
-import { useState } from "react";
 import { getToken } from "../../Http";
 
 const Login = () => {
@@ -17,7 +16,7 @@ const Login = () => {
     axios
       .post(API_LOGIN, values)
       .then(function (res) {
-        if (res?.data?.user?.admin === 1) {
+        if (res?.data?.user?.role === 0) {
           Cookies.set("data", JSON.stringify(res.data.user));
           Cookies.set("token", res.data.access_token);
           history.push(HOME);

@@ -1,11 +1,7 @@
 import PrivateLayout from "../../Layout/PrivateLayout";
 import { Form, Select, InputNumber, Button, Input, DatePicker } from "antd";
 import axios from "axios";
-import {
-  API_MOVIES_SELECT,
-  API_ROOM_SELECT,
-  API_SEAT_CREATE,
-} from "../../config/endpointapi";
+import { API_ROOM_SELECT, API_SEAT_CREATE } from "../../config/endpointapi";
 import { useEffect, useState } from "react";
 import Cookies from "cookies-js";
 import { useHistory } from "react-router-dom";
