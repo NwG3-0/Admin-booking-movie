@@ -1,37 +1,37 @@
-import { Button, Form, Input } from "antd";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "../../config/path";
-import { API_LOGIN } from "../../config/endpointapi";
-import Cookies from "cookies-js";
-import "../auth/Login.css";
-import Logo from "../../asset/Logo-main.png";
-import { getToken } from "../../Http";
+import { Button, Form, Input } from 'antd'
+import { useHistory } from 'react-router-dom'
+import axios from 'axios'
+import { HOME } from '../../config/path'
+import { API_LOGIN } from '../../config/endpointapi'
+import Cookies from 'cookies-js'
+import '../auth/Login.css'
+import Logo from '../../asset/Logo-main.png'
+import { getToken } from '../../Http'
 
 const Login = () => {
-  const history = useHistory();
+  const history = useHistory()
 
   const onFinish = (values) => {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
     axios
       .post(API_LOGIN, values)
       .then(function (res) {
-        if (res?.data?.user?.role === 0) {
-          Cookies.set("data", JSON.stringify(res.data.user));
-          Cookies.set("token", res.data.access_token);
-          history.push(HOME);
+        if (res?.data?.user?.role === 1) {
+          Cookies.set('data', JSON.stringify(res.data.user))
+          Cookies.set('token', res.data.access_token)
+          history.push(HOME)
         } else {
-          alert("Bạn không có quyền");
+          alert('Bạn không có quyền')
         }
       })
       .catch(function (err) {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+    console.log('Failed:', errorInfo)
+  }
 
   return (
     <div className="login">
@@ -48,21 +48,13 @@ const Login = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Vui lòng nhập email!" }]}
-          >
+          <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email!' }]}>
             <div className="form-input">
               <Input />
             </div>
           </Form.Item>
 
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
-          >
+          <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>
             <div className="form-input">
               <Input.Password />
             </div>
@@ -77,6 +69,6 @@ const Login = () => {
         </Form>
       </div>
     </div>
-  );
-};
-export default Login;
+  )
+}
+export default Login
