@@ -7,15 +7,15 @@ export const API_LOGOUT = `${BASE_API}/api/auth/logout`
 export const API_LIST_USER = `${BASE_API}/api/auth/list`
 
 // Api movie
-export const API_MOVIES_STORE = `${BASE_API}/api/movies/store`
-export const API_MOVIES = `${BASE_API}/api/movies`
-export const API_MOVIES_SELECT = `${API_MOVIES}/select`
-export const API_MOVIES_DELETE = `${BASE_API}/api/movies/delete`
-export const API_MOVIES_DETAIL = `${BASE_API}/api/movies/:id`
-export const API_MOVIES_UPDATE = `${BASE_API}/api/movies/update`
+export const API_MOVIE_STORE = `${BASE_API}/api/movies/store`
+export const API_MOVIE = `${BASE_API}/api/movies`
+export const API_MOVIE_SELECT = `${BASE_API}/api/movies/select`
+export const API_MOVIE_DELETE = `${BASE_API}/api/movies/delete`
+export const API_MOVIE_DETAIL = `${BASE_API}/api/movies/:id`
+export const API_MOVIE_UPDATE = `${BASE_API}/api/movies/update`
 
 // Api advertisement
-export const API_LIST_ADVERTISEMENT = `${BASE_API}/api/advertise`
+export const API_ADVERTISEMENT = `${BASE_API}/api/advertise`
 export const API_ADVERTISEMENT_STORE = `${BASE_API}/api/advertise/store`
 export const API_ADVERTISEMENT_UPDATE = `${BASE_API}/api/advertise/update`
 export const API_ADVERTISEMENT_DELETE = `${BASE_API}/api/advertise/delete/:id`
@@ -46,7 +46,7 @@ export const API_LIST_NEWS = `${BASE_API}/api/news`
 export const API_NEWS_STORE = `${BASE_API}/api/news/store`
 export const API_NEWS_UPDATE = `${BASE_API}/api/news/update`
 export const API_NEWS_DELETE = `${BASE_API}/api/news/delete/:id`
-export const API_NEWS_SELECT = `${API_LIST_NEWS}/select`
+export const API_NEWS_SELECT = `${BASE_API}/api/news/select`
 export const API_NEWS_DETAIL = `${BASE_API}/api/news/:id`
 
 //Api tickets

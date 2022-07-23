@@ -1,14 +1,26 @@
-import PrivateLayout from '../../Layout/PrivateLayout'
-import { Form, Select, InputNumber, Button, Input, DatePicker, TimePicker } from 'antd'
-import axios from 'axios'
-import { API_MOVIES_SELECT, API_ROOM_SELECT, API_SHOWTIME_CREATE } from '../../config/endpointapi'
-import { useEffect, useState } from 'react'
-import Cookies from 'cookies-js'
-import { useHistory } from 'react-router-dom'
-import { SEAT, SHOWTIME } from '../../config/path'
-import moment from 'moment'
+import PrivateLayout from "../../Layout/PrivateLayout";
+import {
+  Form,
+  Select,
+  InputNumber,
+  Button,
+  Input,
+  DatePicker,
+  TimePicker,
+} from "antd";
+import axios from "axios";
+import {
+  API_MOVIE_SELECT,
+  API_ROOM_SELECT,
+  API_SHOWTIME_CREATE,
+} from "../../config/endpointapi";
+import { useEffect, useState } from "react";
+import Cookies from "cookies-js";
+import { useHistory } from "react-router-dom";
+import { SEAT, SHOWTIME } from "../../config/path";
+import moment from "moment";
 
-const { Option } = Select
+const { Option } = Select;
 
 const ShowTimeCreate = () => {
   const [token] = useState(Cookies?.get('token'))
@@ -70,7 +82,7 @@ const ShowTimeCreate = () => {
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
     const getMovieSelect = async () => {
       await axios
-        .get(API_MOVIES_SELECT)
+        .get(API_MOVIE_SELECT)
         .then((res) => {
           setMovieSelect(res?.data?.data)
         })

@@ -1,9 +1,7 @@
 import PrivateLayout from '../../Layout/PrivateLayout'
 import { Form, Select, InputNumber, Button, Input, DatePicker } from 'antd'
 import axios from 'axios'
-import { API_MOVIES_STORE } from '../../config/endpointapi'
-import { useState } from 'react'
-import Cookies from 'cookies-js'
+import { API_MOVIE_STORE } from '../../config/endpointapi'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
 import { MOVIE } from '../../config/path'
@@ -45,7 +43,7 @@ const MovieCreate = () => {
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
     axios
-      .post(API_MOVIES_STORE, values)
+      .post(API_MOVIE_STORE, values)
       .then(function (res) {
         history.push(MOVIE)
       })

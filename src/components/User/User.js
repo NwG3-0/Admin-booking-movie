@@ -49,6 +49,8 @@ const User = () => {
     { title: "Address", dataIndex: "address" },
     { title: "Email", dataIndex: "email" },
     { title: "Person ID", dataIndex: "person_id" },
+    { title: "Ngày tạo", dataIndex: "created_at" },
+    
   ];
 
   return (

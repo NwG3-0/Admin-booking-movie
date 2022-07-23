@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import PrivateLayout from '../../Layout/PrivateLayout'
 import { Button, Col, Input, Row, Table } from 'antd'
 import axios from 'axios'
-import { API_MOVIES, API_MOVIES_DELETE } from '../../config/endpointapi'
+import { API_MOVIE, API_MOVIE_DELETE } from '../../config/endpointapi'
 import { MOVIE_CREATE, MOVIE_UPDATE } from '../../config/path'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
@@ -27,7 +27,7 @@ const Movie = () => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       const params = { limit, page, keyword }
       await axios
-        .get(API_MOVIES, { params })
+        .get(API_MOVIE, { params })
         .then((res) => {
           setData(res?.data?.data?.data)
           setTotal(res?.data?.data?.total)
@@ -45,7 +45,7 @@ const Movie = () => {
 
   const onDelete = async (id) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
-    await axios.post(`${API_MOVIES_DELETE}/${id}`).then((res) => {
+    await axios.post(`${API_MOVIE_DELETE}/${id}`).then((res) => {
       setStatus(!status)
     })
   }
@@ -85,8 +85,8 @@ const Movie = () => {
         console.log(value)
         return (
           <>
-            <Button onClick={() => onSwitchUpdate(value?.id)}>Sửa</Button>
-            <Button onClick={() => onDelete(value?.id)}>Xóa</Button>
+            <Button onClick={() => onSwitchUpdate(value?.id)}>Update</Button>
+            <Button onClick={() => onDelete(value?.id)}>Delete</Button>
           </>
         )
       },
@@ -94,7 +94,7 @@ const Movie = () => {
   ]
   return (
     <PrivateLayout>
-      <h2 style={{ fontSize: '32px', textTransform: 'uppercase' }}>List of movie</h2>
+      <h2 style={{ fontSize: '32px', textTransform: 'uppercase' }}>Movies list</h2>
       <Row>
         <Col span={22}>
           <div className="movies-search">
@@ -106,7 +106,7 @@ const Movie = () => {
         </Col>
         <Col span={2}>
           <div className="movies-add__btn" onClick={onSearch}>
-            <Link to={MOVIE_CREATE}>Add movie</Link>
+            <Link to={MOVIE_CREATE}>Create Movie</Link>
           </div>
         </Col>
       </Row>

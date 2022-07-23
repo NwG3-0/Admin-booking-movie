@@ -1,59 +1,89 @@
-/* eslint-disable jsx-a11y/alt-text */
-import { Button, Col, Input, Row, Table } from 'antd'
-import axios from 'axios'
-import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { API_ADVERTISEMENT_DELETE, API_LIST_ADVERTISEMENT } from '../../config/endpointapi'
-import { ADVERTISEMENT_CREATE } from '../../config/path'
+import { Button, Popover, Col, Row, Table } from 'antd'
+import { useState } from 'react'
+import { API_ADVERTISEMENT_DELETE } from '../../config/endpointapi'
+import { ADVERTISEMENT, ADVERTISEMENT_CREATE } from '../../config/path'
 import PrivateLayout from '../../Layout/PrivateLayout'
 import '../../style/Advertisement.css'
 import { bindParam } from '../../config/function'
+import { Link, useHistory, useLocation } from 'react-router-dom'
+
+import { useQueryClient } from 'react-query'
+import { postAxios } from '../../Http'
+import QueryString from 'qs'
+import { toast } from 'react-toastify'
+import Search from 'antd/lib/transfer/search'
+import useAdvertisementQuery from '../../hooks/useAdvertisementQuery'
+import { BsThreeDots } from 'react-icons/bs'
+import { AiFillDelete } from 'react-icons/ai'
+import { MdUpdate } from 'react-icons/md'
 
 const Advertisement = () => {
-  const value = useRef()
-  const [status, setStatus] = useState(false)
-  const [limit, setLimit] = useState(10)
-  const [total, setTotal] = useState()
-  const [keyword, setKeyword] = useState('')
-  const [page, setPage] = useState(1)
-  const [data, setData] = useState([])
-  useEffect(() => {
-    const getadvertisement = async () => {
-      const params = { limit, page, keyword }
-      await axios
-        .get(API_LIST_ADVERTISEMENT, { params })
-        .then((res) => {
-          setData(res?.data?.data?.data)
-          setTotal(res?.data?.data?.total)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-    getadvertisement()
-  }, [status, limit, page, keyword])
-  const onSearch = () => {
-    setKeyword(value.current.input.value)
-  }
+  const location = useLocation()
+  const history = useHistory()
+  const queryClient = useQueryClient()
+  const [isOpen, setIsOpen] = useState(false)
+  const [isOpenPopover, setIsPopover] = useState(false)
+  const searchUrl = QueryString.parse(location.search.substr(1))
+  const [idDelete, setIdDelete] = useState(0)
+  const [limit] = useState(searchUrl?.limit || 10)
+  const [keyword] = useState(searchUrl?.keyword || '')
+  const [page] = useState(searchUrl?.page || 1)
 
+  const { data: advertise, isError, isLoading, isFetching } = useAdvertisementQuery([limit, keyword, page])
+  const data = advertise?.data?.data || []
   const onChangePage = (page, limit) => {
-    setPage(page)
-    setLimit(limit)
-  }
-  const onDelete = async (id) => {
-    await axios.post(bindParam(API_ADVERTISEMENT_DELETE, { id })).then((res) => {
-      console.log(value?.id)
-      setStatus(!status)
+    let params = { page, limit }
+
+    history.push({
+      pathname: ADVERTISEMENT,
+      search: QueryString.stringify(params),
     })
   }
+  console.log(advertise)
+  const onDelete = () => {
+    postAxios(bindParam(API_ADVERTISEMENT_DELETE, { id: idDelete }))
+      .then((res) => {
+        if (res.status === 1) {
+          // toast.success(res?.message)
+          queryClient.invalidateQueries(['advertisement'])
+        }
+      })
+      .catch((err) => {
+        toast.error(err?.message)
+      })
+      .finally(() => {
+        setIsOpen(false)
+      })
+  }
+  const onSearch = (advertise) => {
+    let params = { page, limit, keyword: advertise }
+
+    history.push({
+      pathname: ADVERTISEMENT,
+      search: QueryString.stringify(params),
+    })
+  }
+  const onOpenModal = (id) => {
+    setIdDelete(id)
+    setIsPopover(true)
+    setIsOpen(true)
+  }
+
+  const onCloseModal = () => {
+    setIsOpen(false)
+  }
+
+  // const onGoToUpdate = (id) => {
+  //   history.push(bindParams(ADVERTISEMENT_UPDATE, { id }))
+  // }
   const columns = [
     { title: 'ID Quảng cáo', dataIndex: 'id' },
     {
       title: 'Ảnh',
-      render: (value, record) => {
+      render: (advertise) => {
         return (
           <div className="advertisement-list__img">
-            <img src={value.image} />
+            <img src={advertise.image}></img>
           </div>
         )
       },
@@ -64,12 +94,28 @@ const Advertisement = () => {
     },
 
     {
-      title: 'Action',
-      render: (value, record) => {
+      title: '',
+      dataIndex: '',
+      width: '5%',
+      key: 'action',
+      render: ({ id }) => {
+        const content = (
+          <div className="advertise-popover">
+            <div className="advertise-popover__content" onClick={() => onOpenModal(id)}>
+              <AiFillDelete />
+              <div onClick={onDelete}>Delete</div>
+            </div>
+            <div className="advertise-popover__content" >
+              <MdUpdate />
+              <div>Update</div>
+            </div>
+          </div>
+        )
+
         return (
-          <>
-            <Button onClick={() => onDelete(value?.id)}>Xóa</Button>
-          </>
+          <Popover placement="bottom" content={content} trigger="click">
+            <BsThreeDots className="advertise-three__dot" />
+          </Popover>
         )
       },
     },
@@ -80,28 +126,38 @@ const Advertisement = () => {
       <Row>
         <Col span={20}>
           <div className="advertisement-search">
-            <Input ref={value} placeholder="Search by First name" />
-            <div className="advertisement-search__btn" onClick={onSearch}>
-              Tìm
-            </div>
+            <Search
+              loading={isFetching}
+              defaultadvertise={keyword}
+              onSearch={onSearch}
+              className="advertise-content-search__input"
+            />
           </div>
         </Col>
         <Col span={4}>
-          <div className="advertisement-add__btn" onClick={onSearch}>
+          <div className="advertisement-add__btn">
             <Link to={ADVERTISEMENT_CREATE}>Thêm quảng cáo</Link>
           </div>
         </Col>
       </Row>
 
       <Table
+        dataSource={data}
         columns={columns}
+        scroll={{
+          x: 1100,
+        }}
+        key="advertise"
+        loading={isLoading}
         pagination={{
-          total: total,
           onChange: onChangePage,
+          total: advertise?.total,
+          showQuickJumper: true,
           showSizeChanger: true,
           pageSizeOptions: [5, 10, 20, 30],
+          current: advertise?.current_page,
+          pageSize: advertise?.per_page,
         }}
-        dataSource={data}
       />
     </PrivateLayout>
   )
