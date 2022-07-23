@@ -2,8 +2,6 @@ import PrivateLayout from '../../Layout/PrivateLayout'
 import { Form, Select, InputNumber, Button, Input, DatePicker } from 'antd'
 import axios from 'axios'
 import { API_MOVIE_STORE } from '../../config/endpointapi'
-import { useState } from 'react'
-import Cookies from 'cookies-js'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
 import { MOVIE } from '../../config/path'
@@ -57,12 +55,12 @@ const MovieCreate = () => {
   return (
     <PrivateLayout>
       <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
-        <h2 style={{ fontSize: '2rem', textTransform: 'uppercase' }}>Create Movie</h2>
+        <h2 style={{ fontSize: '2rem', textTransform: 'uppercase' }}>Add movie</h2>
 
         <Form.Item
           {...formItemLayout}
           name="name"
-          label="Name"
+          label="Name of movie"
           rules={[
             {
               required: true,
@@ -79,7 +77,7 @@ const MovieCreate = () => {
           rules={[
             {
               required: true,
-              message: 'Input the range of movie',
+              message: 'Nhập thời lượng phim',
             },
           ]}
         >
@@ -92,7 +90,7 @@ const MovieCreate = () => {
           rules={[
             {
               required: true,
-              message: 'Input the start date',
+              message: 'Nhập thời gian khởi chiếu',
             },
           ]}
         >
@@ -102,9 +100,9 @@ const MovieCreate = () => {
           name="dimension"
           label="Dimension"
           hasFeedback
-          rules={[{ required: true, message: 'Input the dimension' }]}
+          rules={[{ required: true, message: 'Nhập loại phim' }]}
         >
-          <Select placeholder="Dimension of movie">
+          <Select placeholder="Dimension">
             <Option value="2D">2D</Option>
             <Option value="3D">3D</Option>
           </Select>
@@ -116,7 +114,7 @@ const MovieCreate = () => {
           rules={[
             {
               required: true,
-              message: 'Input the types of movie',
+              message: 'Nhập thể loại phim',
               type: 'array',
             },
           ]}
@@ -132,11 +130,11 @@ const MovieCreate = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Range age">
+        <Form.Item label="Age">
           <Form.Item name="range_age" noStyle>
             <InputNumber min={0} max={21} />
           </Form.Item>
-          <span className="ant-form-text"> years old</span>
+          <span className="ant-form-text"> age</span>
         </Form.Item>
         <Form.Item
           {...formItemLayout}
@@ -145,7 +143,7 @@ const MovieCreate = () => {
           rules={[
             {
               required: true,
-              message: 'Input the actor',
+              message: 'Nhập tên diễn viên',
             },
           ]}
         >
@@ -158,13 +156,13 @@ const MovieCreate = () => {
           rules={[
             {
               required: true,
-              message: 'Input the director',
+              message: 'Nhập tên đạo diễn',
             },
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="description" label="Description" rules={[{ required: true, message: 'Input the description' }]}>
+        <Form.Item name="description" label="Description" rules={[{ required: true, message: 'Nhập mô tả' }]}>
           <Input.TextArea rows={5} showCount maxLength={1000} />
         </Form.Item>
         <Form.Item
@@ -174,7 +172,7 @@ const MovieCreate = () => {
           rules={[
             {
               required: true,
-              message: 'Input the poster',
+              message: 'Nhập ảnh',
             },
           ]}
         >
@@ -187,7 +185,7 @@ const MovieCreate = () => {
           rules={[
             {
               required: true,
-              message: 'Input the trailer URL',
+              message: 'Nhập link trailer',
             },
           ]}
         >

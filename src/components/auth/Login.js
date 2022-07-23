@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Button, Form, Input } from 'antd'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'

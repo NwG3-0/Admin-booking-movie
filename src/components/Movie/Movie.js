@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useEffect, useRef, useState } from 'react'
 import PrivateLayout from '../../Layout/PrivateLayout'
 import { Button, Col, Input, Row, Table } from 'antd'
@@ -77,7 +78,7 @@ const Movie = () => {
     { title: 'Range of movie', dataIndex: 'range_of_movie' },
     { title: 'Actor', dataIndex: 'actor' },
     { title: 'Director', dataIndex: 'director' },
-    // { title: "Mô tả", dataIndex: "description" },
+    { title: 'Description', dataIndex: 'description' },
     {
       title: 'Action',
       render: (value, record) => {
@@ -99,7 +100,7 @@ const Movie = () => {
           <div className="movies-search">
             <Input ref={value} placeholder="Search by First name" />
             <div className="movies-search__btn" onClick={onSearch}>
-              Tìm
+              Search
             </div>
           </div>
         </Col>
