@@ -1,113 +1,112 @@
-import { useEffect, useRef, useState } from "react";
-import PrivateLayout from "../../Layout/PrivateLayout";
-import { Button, Col, Input, Row, Table } from "antd";
-import axios from "axios";
-import { API_MOVIES, API_MOVIES_DELETE } from "../../config/endpointapi";
-import { MOVIE_CREATE, MOVIE_UPDATE } from "../../config/path";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import Cookies from "cookies-js";
-import { bindParam } from "../../config/function";
-import "../../style/Movie.css";
-import { getToken } from "../../Http";
+/* eslint-disable jsx-a11y/alt-text */
+import { useEffect, useRef, useState } from 'react'
+import PrivateLayout from '../../Layout/PrivateLayout'
+import { Button, Col, Input, Row, Table } from 'antd'
+import axios from 'axios'
+import { API_MOVIES, API_MOVIES_DELETE } from '../../config/endpointapi'
+import { MOVIE_CREATE, MOVIE_UPDATE } from '../../config/path'
+import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import Cookies from 'cookies-js'
+import { bindParam } from '../../config/function'
+import '../../style/Movie.css'
+import { getToken } from '../../Http'
 
 const Movie = () => {
-  const value = useRef();
-  const [status, setStatus] = useState(false);
-  const [limit, setLimit] = useState(10);
-  const [total, setTotal] = useState();
-  const [keyword, setKeyword] = useState("");
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
-  const history = useHistory();
+  const value = useRef()
+  const [status, setStatus] = useState(false)
+  const [limit, setLimit] = useState(10)
+  const [total, setTotal] = useState()
+  const [keyword, setKeyword] = useState('')
+  const [page, setPage] = useState(1)
+  const [data, setData] = useState([])
+  const history = useHistory()
 
   useEffect(() => {
     const getmovies = async () => {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
-      const params = { limit, page, keyword };
+      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
+      const params = { limit, page, keyword }
       await axios
         .get(API_MOVIES, { params })
         .then((res) => {
-          setData(res?.data?.data?.data);
-          setTotal(res?.data?.data?.total);
+          setData(res?.data?.data?.data)
+          setTotal(res?.data?.data?.total)
         })
         .catch((err) => {
-          console.log(err);
-        });
-    };
-    getmovies();
-  }, [status, limit, page, keyword]);
+          console.log(err)
+        })
+    }
+    getmovies()
+  }, [status, limit, page, keyword])
 
   const onSearch = () => {
-    setKeyword(value.current.input.value);
-  };
+    setKeyword(value.current.input.value)
+  }
 
   const onDelete = async (id) => {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
     await axios.post(`${API_MOVIES_DELETE}/${id}`).then((res) => {
-      setStatus(!status);
-    });
-  };
+      setStatus(!status)
+    })
+  }
 
   const onChangePage = (page, limit) => {
-    setPage(page);
-    setLimit(limit);
-  };
+    setPage(page)
+    setLimit(limit)
+  }
 
   const onSwitchUpdate = (id) => {
-    history.push(bindParam(MOVIE_UPDATE, { id }));
-  };
+    history.push(bindParam(MOVIE_UPDATE, { id }))
+  }
 
   const columns = [
-    { title: "ID Phim", dataIndex: "id" },
+    { title: 'ID Phim', dataIndex: 'id' },
     {
-      title: "Poster",
+      title: 'Poster',
       render: (value, record) => {
         return (
           <div className="movie-list__img">
             <img src={value.poster} />
           </div>
-        );
+        )
       },
     },
-    { title: "Name", dataIndex: "name" },
-    { title: "Loại phim", dataIndex: "dimension" },
-    { title: "Thể loại", dataIndex: "type_of_movie" },
-    { title: "Ngày khởi chiếu", dataIndex: "start_date" },
-    { title: "Thời lượng", dataIndex: "range_of_movie" },
-    { title: "Diễn viên", dataIndex: "actor" },
-    { title: "Đạo diễn", dataIndex: "director" },
-    { title: "Mô tả", dataIndex: "description" },
+    { title: 'Name', dataIndex: 'name' },
+    { title: 'Dimension', dataIndex: 'dimension' },
+    { title: 'Type of movie', dataIndex: 'type_of_movie' },
+    { title: 'Start date', dataIndex: 'start_date' },
+    { title: 'Range of movie', dataIndex: 'range_of_movie' },
+    { title: 'Actor', dataIndex: 'actor' },
+    { title: 'Director', dataIndex: 'director' },
+    { title: 'Description', dataIndex: 'description' },
     {
-      title: "Action",
+      title: 'Action',
       render: (value, record) => {
-        console.log(value);
+        console.log(value)
         return (
           <>
             <Button onClick={() => onSwitchUpdate(value?.id)}>Sửa</Button>
             <Button onClick={() => onDelete(value?.id)}>Xóa</Button>
           </>
-        );
+        )
       },
     },
-  ];
+  ]
   return (
     <PrivateLayout>
-      <h2 style={{ fontSize: "32px", textTransform: "uppercase" }}>
-        Danh sách phim
-      </h2>
+      <h2 style={{ fontSize: '32px', textTransform: 'uppercase' }}>List of movie</h2>
       <Row>
         <Col span={22}>
           <div className="movies-search">
             <Input ref={value} placeholder="Search by First name" />
             <div className="movies-search__btn" onClick={onSearch}>
-              Tìm
+              Search
             </div>
           </div>
         </Col>
         <Col span={2}>
           <div className="movies-add__btn" onClick={onSearch}>
-            <Link to={MOVIE_CREATE}>Thêm phim</Link>
+            <Link to={MOVIE_CREATE}>Add movie</Link>
           </div>
         </Col>
       </Row>
@@ -124,6 +123,6 @@ const Movie = () => {
         dataSource={data}
       />
     </PrivateLayout>
-  );
-};
-export default Movie;
+  )
+}
+export default Movie

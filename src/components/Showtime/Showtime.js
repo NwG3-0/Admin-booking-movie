@@ -1,91 +1,89 @@
-import PrivateLayout from "../../Layout/PrivateLayout";
-import { Button, Col, Input, Row, Table } from "antd";
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import {
-  API_LIST_SHOWTIME,
-  API_SHOWTIME_DELETE,
-} from "../../config/endpointapi";
-import { bindParam } from "../../config/function";
-import { SHOWTIME_CREATE } from "../../config/path";
-import "../../style/Showtime.css";
+import PrivateLayout from '../../Layout/PrivateLayout'
+import { Button, Col, Input, Row, Table } from 'antd'
+import axios from 'axios'
+import { useEffect, useRef, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { API_LIST_SHOWTIME, API_SHOWTIME_DELETE } from '../../config/endpointapi'
+import { bindParam } from '../../config/function'
+import { SHOWTIME_CREATE } from '../../config/path'
+import '../../style/Showtime.css'
+import { getToken } from '../../Http'
 
 const ShowTime = () => {
-  const value = useRef();
-  const [status, setStatus] = useState(false);
-  const [limit, setLimit] = useState(10);
-  const [total, setTotal] = useState();
-  const [keyword, setKeyword] = useState("");
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
-  const history = useHistory();
+  const value = useRef()
+  const [status, setStatus] = useState(false)
+  const [limit, setLimit] = useState(10)
+  const [total, setTotal] = useState()
+  const [keyword, setKeyword] = useState('')
+  const [page, setPage] = useState(1)
+  const [data, setData] = useState([])
+  const history = useHistory()
 
   const onSearch = () => {
-    setKeyword(value.current.input.value);
-  };
+    setKeyword(value.current.input.value)
+  }
 
   useEffect(() => {
     const getShowtime = async () => {
-      const params = { limit, page, keyword };
+      const params = { limit, page, keyword }
       await axios
         .get(API_LIST_SHOWTIME, { params })
         .then((res) => {
-          setData(res?.data?.data?.data);
-          setTotal(res?.data?.data?.total);
+          setData(res?.data?.data?.data)
+          setTotal(res?.data?.data?.total)
         })
         .catch((err) => {
-          console.log(err);
-        });
-    };
-    getShowtime();
-  }, [status, limit, page, keyword]);
+          console.log(err)
+        })
+    }
+    getShowtime()
+  }, [status, limit, page, keyword])
 
   const onDelete = async (id) => {
+    axios.defaults.headers.common['AUTHORIZATION'] = `Bearer ${getToken()}`
+
     await axios.post(bindParam(API_SHOWTIME_DELETE, { id })).then((res) => {
-      setStatus(!status);
-    });
-  };
+      setStatus(!status)
+    })
+  }
 
   const onChangePage = (page, limit) => {
-    setPage(page);
-    setLimit(limit);
-  };
+    setPage(page)
+    setLimit(limit)
+  }
 
   const columns = [
     {
-      title: "ID Suất chiếu",
-      dataIndex: "id",
+      title: 'ID Suất chiếu',
+      dataIndex: 'id',
     },
     {
-      title: "Ngày chiếu",
-      dataIndex: "show_date",
+      title: 'Ngày chiếu',
+      dataIndex: 'show_date',
     },
     {
-      title: "Giờ chiếu",
-      dataIndex: "show_time",
+      title: 'Giờ chiếu',
+      dataIndex: 'show_time',
     },
-    { title: "Phòng chiếu", dataIndex: ["room", "name"] },
-    { title: "Phim chiếu", dataIndex: ["movie", "name"] },
+    { title: 'Phòng chiếu', dataIndex: ['room', 'name'] },
+    { title: 'Phim chiếu', dataIndex: ['movie', 'name'] },
     {
-      title: "Action",
+      title: 'Action',
       render: (value, record) => {
-        console.log(value);
+        console.log(value)
         return (
           <>
             {/* <Button onClick={() => onSwitchUpdate(value?.id)}>Sửa</Button> */}
             <Button onClick={() => onDelete(value?.id)}>Xóa</Button>
           </>
-        );
+        )
       },
     },
-  ];
+  ]
 
   return (
     <PrivateLayout>
-      <h2 style={{ fontSize: "32px", textTransform: "uppercase" }}>
-        Danh sách suất chiếu
-      </h2>
+      <h2 style={{ fontSize: '32px', textTransform: 'uppercase' }}>Danh sách suất chiếu</h2>
       <Row>
         <Col span={22}>
           <div className="showtime-search">
@@ -114,7 +112,7 @@ const ShowTime = () => {
         dataSource={data}
       />
     </PrivateLayout>
-  );
-};
+  )
+}
 
-export default ShowTime;
+export default ShowTime

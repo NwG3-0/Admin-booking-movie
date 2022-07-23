@@ -1,32 +1,20 @@
-import PrivateLayout from "../../Layout/PrivateLayout";
-import {
-  Form,
-  Select,
-  InputNumber,
-  Button,
-  Input,
-  DatePicker,
-  TimePicker,
-} from "antd";
-import axios from "axios";
-import {
-  API_MOVIES_SELECT,
-  API_ROOM_SELECT,
-  API_SHOWTIME_CREATE,
-} from "../../config/endpointapi";
-import { useEffect, useState } from "react";
-import Cookies from "cookies-js";
-import { useHistory } from "react-router-dom";
-import { SEAT, SHOWTIME } from "../../config/path";
-import moment from "moment";
+import PrivateLayout from '../../Layout/PrivateLayout'
+import { Form, Select, InputNumber, Button, Input, DatePicker, TimePicker } from 'antd'
+import axios from 'axios'
+import { API_MOVIES_SELECT, API_ROOM_SELECT, API_SHOWTIME_CREATE } from '../../config/endpointapi'
+import { useEffect, useState } from 'react'
+import Cookies from 'cookies-js'
+import { useHistory } from 'react-router-dom'
+import { SEAT, SHOWTIME } from '../../config/path'
+import moment from 'moment'
 
-const { Option } = Select;
+const { Option } = Select
 
 const ShowTimeCreate = () => {
-  const [token] = useState(Cookies?.get("token"));
-  const [movieSelect, setMovieSelect] = useState([]);
-  const [roomSelect, setRoomSelect] = useState([]);
-  const history = useHistory();
+  const [token] = useState(Cookies?.get('token'))
+  const [movieSelect, setMovieSelect] = useState([])
+  const [roomSelect, setRoomSelect] = useState([])
+  const history = useHistory()
 
   // const onChange = (e) => {
   //   console.log(e.target.value);
@@ -35,71 +23,69 @@ const ShowTimeCreate = () => {
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
-  };
+  }
 
   useEffect(() => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
     const getMovieSelect = async () => {
       await axios
         .get(API_ROOM_SELECT)
         .then((res) => {
-          setRoomSelect(res?.data?.data);
+          setRoomSelect(res?.data?.data)
         })
         .catch((err) => {
-          console.log(err);
-        });
-    };
+          console.log(err)
+        })
+    }
 
-    getMovieSelect();
-  }, [token]);
+    getMovieSelect()
+  }, [token])
 
   const onFinish = (values) => {
-    const { show_date, show_time } = values;
+    const { show_date, show_time } = values
 
     if (show_date) {
-      values.show_date = moment(show_date).format("YYYY-MM-DD");
+      values.show_date = moment(show_date).format('YYYY-MM-DD')
     }
 
     if (show_time) {
-      values.show_time = moment(show_time).format("HH:mm:ss");
+      values.show_time = moment(show_time).format('HH:mm')
     }
 
-    values.created_at = moment().format("YYYY-MM-DD HH:mm:ss");
-    values.updated_at = moment().format("YYYY-MM-DD HH:mm:ss");
+    values.created_at = moment().format('YYYY-MM-DD HH:mm:ss')
+    values.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
 
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
     axios
       .post(API_SHOWTIME_CREATE, values)
       .then(function (res) {
-        history.push(SHOWTIME);
+        history.push(SHOWTIME)
       })
       .catch(function (err) {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   useEffect(() => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` }
     const getMovieSelect = async () => {
       await axios
         .get(API_MOVIES_SELECT)
         .then((res) => {
-          setMovieSelect(res?.data?.data);
+          setMovieSelect(res?.data?.data)
         })
         .catch((err) => {
-          console.log(err);
-        });
-    };
+          console.log(err)
+        })
+    }
 
-    getMovieSelect();
-  }, [token]);
+    getMovieSelect()
+  }, [token])
 
   return (
     <PrivateLayout>
       <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
-        <h2 style={{ fontSize: "2rem", textTransform: "uppercase" }}>
-          Thêm suất chiếu
-        </h2>
+        <h2 style={{ fontSize: '2rem', textTransform: 'uppercase' }}>Thêm suất chiếu</h2>
 
         <Form.Item
           {...formItemLayout}
@@ -108,7 +94,7 @@ const ShowTimeCreate = () => {
           rules={[
             {
               required: true,
-              message: "Nhập thời gian khởi chiếu",
+              message: 'Nhập thời gian khởi chiếu',
             },
           ]}
         >
@@ -122,11 +108,11 @@ const ShowTimeCreate = () => {
           rules={[
             {
               required: true,
-              message: "Nhập thời gian khởi chiếu",
+              message: 'Nhập thời gian khởi chiếu',
             },
           ]}
         >
-          <TimePicker />
+          <TimePicker format={'HH:mm'} minuteStep={15} />
         </Form.Item>
 
         <Form.Item
@@ -135,13 +121,13 @@ const ShowTimeCreate = () => {
           rules={[
             {
               required: true,
-              message: "Nhập phòng",
+              message: 'Nhập phòng',
             },
           ]}
         >
           <Select placeholder="Please select rooms">
             {roomSelect?.map((movie) => {
-              return <Option value={movie?.id}>{movie?.name}</Option>;
+              return <Option value={movie?.id}>{movie?.name}</Option>
             })}
           </Select>
         </Form.Item>
@@ -152,13 +138,13 @@ const ShowTimeCreate = () => {
           rules={[
             {
               required: true,
-              message: "Nhập thể loại phim",
+              message: 'Nhập thể loại phim',
             },
           ]}
         >
           <Select placeholder="Please select movies">
             {movieSelect?.map((movie) => {
-              return <Option value={movie?.id}>{movie?.name}</Option>;
+              return <Option value={movie?.id}>{movie?.name}</Option>
             })}
           </Select>
         </Form.Item>
@@ -170,7 +156,7 @@ const ShowTimeCreate = () => {
         </Form.Item>
       </Form>
     </PrivateLayout>
-  );
-};
+  )
+}
 
-export default ShowTimeCreate;
+export default ShowTimeCreate
