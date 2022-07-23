@@ -51,3 +51,4 @@ export const API_NEWS_DETAIL = `${BASE_API}/api/news/:id`
 
 //Api tickets
 export const API_LIST_TICKET = `${BASE_API}/api/tickets`
+export const API_TICKET_DATE = `${BASE_API}/api/tickets/ticket_chart`
