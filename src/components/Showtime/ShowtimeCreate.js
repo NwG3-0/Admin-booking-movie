@@ -10,7 +10,7 @@ import {
 } from "antd";
 import axios from "axios";
 import {
-  API_MOVIES_SELECT,
+  API_MOVIE_SELECT,
   API_ROOM_SELECT,
   API_SHOWTIME_CREATE,
 } from "../../config/endpointapi";
@@ -82,7 +82,7 @@ const ShowTimeCreate = () => {
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     const getMovieSelect = async () => {
       await axios
-        .get(API_MOVIES_SELECT)
+        .get(API_MOVIE_SELECT)
         .then((res) => {
           setMovieSelect(res?.data?.data);
         })

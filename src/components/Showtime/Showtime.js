@@ -67,6 +67,7 @@ const ShowTime = () => {
     },
     { title: "Phòng chiếu", dataIndex: ["room", "name"] },
     { title: "Phim chiếu", dataIndex: ["movie", "name"] },
+    { title: "Ngày tạo", dataIndex: "created_at" },
     {
       title: "Action",
       render: (value, record) => {

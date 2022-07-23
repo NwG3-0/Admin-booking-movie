@@ -1,7 +1,7 @@
 import PrivateLayout from "../../Layout/PrivateLayout";
 import { Form, Select, InputNumber, Button, Input, DatePicker } from "antd";
 import axios from "axios";
-import { API_MOVIES_DETAIL, API_MOVIES_UPDATE } from "../../config/endpointapi";
+import { API_MOVIE_DETAIL, API_MOVIE_UPDATE } from "../../config/endpointapi";
 import { useEffect, useState } from "react";
 import Cookies from "cookies-js";
 import moment from "moment";
@@ -23,7 +23,7 @@ const MovieUpdate = () => {
   const getData = async () => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     await axios
-      .get(bindParam(API_MOVIES_DETAIL, { id }))
+      .get(bindParam(API_MOVIE_DETAIL, { id }))
       .then((res) => {
         setData(res?.data?.data);
       })
@@ -75,7 +75,7 @@ const MovieUpdate = () => {
 
     axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     axios
-      .post(API_MOVIES_UPDATE, values)
+      .post(API_MOVIE_UPDATE, values)
       .then(function (res) {
         history.push(MOVIE);
       })

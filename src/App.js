@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import AppRouter from "./router";
-import "./Layout/PrivateLayout";
-import axios from "axios";
-import Cookies from "cookies-js";
+import { QueryClient, QueryClientProvider } from 'react-query'
+import AppRouter from './routes'
+import 'antd/dist/antd.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
-  const [token] = useState(Cookies?.get("token"));
-  useEffect(() => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-    console.log(token);
-  }, [token]);
+  const queryClient = new QueryClient()
 
-  return <AppRouter />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppRouter />
+    </QueryClientProvider>
+  )
 }
 
-export default App;
+export default App

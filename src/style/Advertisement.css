@@ -38,3 +38,19 @@ a{
     height: 200px;
     object-fit: contain;
 }
+.advertise .advertise-three__dot {
+    cursor: pointer;
+  }
+  
+  .advertise-popover .advertise-popover__content {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+  }
+  
+  .advertise-popover .advertise-popover__content:hover {
+    cursor: pointer;
+    background-color: bisque;
+  }
+  
