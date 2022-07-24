@@ -82,7 +82,7 @@ const Movie = () => {
     {
       title: 'Action',
       render: (value, record) => {
-        console.log(value)
+        
         return (
           <>
             <Button onClick={() => onSwitchUpdate(value?.id)}>Update</Button>
