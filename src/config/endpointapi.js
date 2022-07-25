@@ -1,4 +1,4 @@
-export const BASE_API = 'https://stark-hamlet-03590.herokuapp.com'
+export const BASE_API = 'http://127.0.0.1:8000'
 
 // Api user for login register
 export const API_LOGIN = `${BASE_API}/api/auth/login`
@@ -13,6 +13,7 @@ export const API_MOVIE_SELECT = `${BASE_API}/api/movies/select`
 export const API_MOVIE_DELETE = `${BASE_API}/api/movies/delete`
 export const API_MOVIE_DETAIL = `${BASE_API}/api/movies/:id`
 export const API_MOVIE_UPDATE = `${BASE_API}/api/movies/update`
+export const API_MOVIE_CHART = `${BASE_API}/api/movies/movie_chart`
 
 // Api advertisement
 export const API_ADVERTISEMENT = `${BASE_API}/api/advertise`
