@@ -17,6 +17,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
+import MovieChart from './MovieChart'
 
 const { RangePicker } = DatePicker
 
@@ -24,19 +25,19 @@ ChartJS.register(LinearScale, CategoryScale, BarElement, PointElement, LineEleme
 
 const Home = () => {
   const [data, setData] = useState()
-  const [startDate, setStartDate] = useState(moment().subtract(3, 'days'))
+  const [startDate, setStartDate] = useState(moment().subtract(30, 'days'))
   const [endDate, setEndDate] = useState(moment())
   const chartRef = useRef()
   const [labels, setLabels] = useState([])
   const [dataCol, setDataCol] = useState([])
 
   useEffect(() => {
+    axios.defaults.headers.common['AUTHORIZATION'] = `Bearer ${getToken()}`
     const getTicket = async () => {
       const params = {
         start_date: moment(startDate).format('YYYY-MM-DD'),
         end_date: moment(endDate).format('YYYY-MM-DD'),
       }
-      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       await axios
         .get(API_TICKET_DATE, { params })
         .then((res) => {
@@ -56,9 +57,7 @@ const Home = () => {
       for (let i = 0; i <= moment(endDate - startDate).format('D') - 1; i += 1) {
         var count = 0
         label.push(moment(startDate).add(i, 'days').format('YYYY-MM-DD'))
-        // console.log('data: ', data)
         for (let y = 0; y < data?.length; y += 1) {
-          // console.log('Data: ', data[y])
           if (
             moment(startDate).add(i, 'days').format('YYYY-MM-DD') === moment(data[y]?.created_at).format('YYYY-MM-DD')
           ) {
@@ -77,33 +76,40 @@ const Home = () => {
     setEndDate(value[1])
   }
 
-  console.log(labels, dataCol)
   return (
     <PrivateLayout>
       <div className="home">
-        <RangePicker defaultValue={[startDate, endDate]} onChange={handleChangeRangeDate} />
-        <Chart
-          ref={chartRef}
-          data={{
-            labels,
-            datasets: [
-              {
-                label: 'Ticket',
-                data: dataCol,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-              },
-            ],
-          }}
-          type="line"
-          options={{
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          }}
-        />
+        <div className="home-ticket">
+          <div className="home-ticket-content">Number of tickets sold</div>
+          <div className="home-date-ticket">
+            <RangePicker defaultValue={[startDate, endDate]} onChange={handleChangeRangeDate} />
+          </div>
+          <div className="home-ticket-chart">
+            <Chart
+              ref={chartRef}
+              data={{
+                labels,
+                datasets: [
+                  {
+                    label: 'Ticket',
+                    data: dataCol,
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                  },
+                ],
+              }}
+              type="line"
+              options={{
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
+        <MovieChart />
       </div>
     </PrivateLayout>
   )
