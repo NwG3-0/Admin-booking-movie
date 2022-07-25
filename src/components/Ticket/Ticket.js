@@ -5,6 +5,7 @@ import PrivateLayout from '../../Layout/PrivateLayout'
 import { API_LIST_TICKET } from '../../config/endpointapi'
 import '../../style/Ticket.css'
 import { getToken } from '../../Http'
+import moment from 'moment'
 
 const Ticket = () => {
   const [limit, setLimit] = useState(10)
@@ -16,7 +17,7 @@ const Ticket = () => {
 
   useEffect(() => {
     const getTicket = async () => {
-      const params = { limit, page, keyword }
+      const params = { limit, page, keyword, date: moment().format('YYYY-MM-DD') }
       axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       await axios
         .get(API_LIST_TICKET, { params })
@@ -43,12 +44,13 @@ const Ticket = () => {
 
   const columns = [
     { title: 'ID', dataIndex: 'id' },
-    { title: 'Mã người dùng', dataIndex: ['user', 'id'] },
-    { title: 'Mã ghế', dataIndex: ['seat', 'id'] },
+    { title: 'Người dùng', dataIndex: ['user', 'full_name'] },
+    { title: 'Hàng ghế', dataIndex: ['seat', 'row'] },
+    { title: 'Dãy ghế', dataIndex: ['seat', 'order'] },
     { title: 'Suất chiếu', dataIndex: ['showtime', 'id'] },
     { title: 'Gía tiền', dataIndex: 'money' },
     { title: 'Confirm', dataIndex: 'confirm' },
-    { title: 'Ngày mua', dataIndex: 'created_at' },
+    { title: 'Ngày chiếu', dataIndex: ['showtime', 'show_date'] },
   ]
 
   return (
