@@ -12,8 +12,7 @@ import { BiMovie } from 'react-icons/bi'
 import { BsFillDoorOpenFill } from 'react-icons/bs'
 import { BsFillCalendarWeekFill } from 'react-icons/bs'
 import { BsNewspaper } from 'react-icons/bs'
-import { MdEventSeat } from 'react-icons/md'
-import { FaTicketAlt } from 'react-icons/fa'
+import { GiTicket } from 'react-icons/gi'
 import { FaChair } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom'
 import { ADVERTISEMENT, HOME, LOGIN, MOVIE, NEWS, ROOM, SEAT, SHOWTIME, TICKET, USER } from '../config/path'
@@ -22,8 +21,6 @@ import axios from 'axios'
 import Cookies from 'cookies-js'
 import { API_LOGOUT } from '../config/endpointapi'
 import { useHistory } from 'react-router-dom'
-import Home from '../components/Home/Home'
-import Item from 'antd/lib/list/Item'
 
 const PrivateLayout = ({ children }) => {
   const { Header, Content, Footer, Sider } = Layout
@@ -101,7 +98,7 @@ const PrivateLayout = ({ children }) => {
     {
       href: TICKET,
       pathname: 'ticket',
-      icon: <BsFillCalendarWeekFill />,
+      icon: <GiTicket />,
       name: 'Tickets',
     },
   ]
